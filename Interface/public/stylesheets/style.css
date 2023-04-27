@@ -1,0 +1,83 @@
+:root {
+	--topbarHeight : 50vh;
+}
+
+body {
+	padding: 50px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.topbar {
+	width: 100vw;
+	height: var(--topbarHeight);
+	opacity: 100%;
+	margin: 0px;
+	left: 0;
+	top: 0vh;
+	position:absolute;
+	border: black 1px;
+	z-index: 2;
+	
+	background:linear-gradient(to top, #FFFFFF0F, #FFFFFF0F), url("../images/braga.jpg");
+	background-position: 50% 85%;
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
+}
+
+.menus {
+	position: relative;
+	height: 30%;
+	width: 100%;
+	left: 0px;
+	bottom: -70%;
+	text-align: center;
+	background-color: #0B2239;
+	opacity: 75%;
+	z-index: 3;
+
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+}
+
+.menus ul {
+	height: 100%;
+	width: 100%;
+	position: 50% 0%;
+}
+
+.menus ul li {
+	border-right: 3px;
+	border-color: white;
+	height: 100%;
+	display: table-cell;
+}
+
+.menus ul li span {
+	text-align: center;
+	font-size-adjust: 100%;
+	text-decoration: none;
+}
+
+.menus *:hover {
+	background-color: white;
+	color: black;
+	border-color: #0B2239;
+}
+
+.selected{
+	background-color: white;
+	color: black;
+	border-color: #0B2239;
+}
+
+.content {
+	position:relative;
+	top: var(--topbarHeight);
+}

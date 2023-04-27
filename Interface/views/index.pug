@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	.topbar
+		//- img(src="../images/favicon.png")
+		//- p EngWeb
+		.menus
+			ul
+				li
+					span.menu-text.selected Home
+				li
+					a.menu-text(href="/login") Login
+	.content
+		p Welcome to #{title}
