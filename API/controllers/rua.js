@@ -14,9 +14,21 @@ module.exports.listaRuas = (query) => {
 };
 
 // Retornar uma rua
-module.exports.getRua = (id) => {
+module.exports.getRua = id => {
     return Rua
     .findOne({_id:id})
+    .then(rua => {
+        return rua;
+    })
+    .catch(erro => {
+        return erro;
+    });
+};
+
+// Retornar uma rua pelo nome
+module.exports.getRuaNome = (nome) => {
+    return Rua
+        .findOne({nome: nome})
     .then(rua => {
         return rua;
     })
@@ -38,9 +50,9 @@ module.exports.addRua = (rua) => {
 };
 
 // Update a uma rua
-module.exports.updateRua = (rua) => {
+module.exports.updateRua = (id, rua) => {
     return Rua
-    .updateOne({_id:rua._id}, rua)
+    .updateOne({_id: id}, rua)
     .then(resposta => {
         return resposta;
     })

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rua xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="file:/C:/Users/In%C3%AAs/Desktop/4%C2%BA%20Ano%20(2018-2019)/1%C2%BA%20Semestre/Publica%C3%A7%C3%A3o%20Eletr%C3%B3nica/MRB-rua.xsd">
+    xsi:noNamespaceSchemaLocation="../MRB-rua.xsd">
     <meta>
         <número>1</número>
         <nome>Rua do Campo</nome>

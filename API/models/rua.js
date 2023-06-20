@@ -1,52 +1,56 @@
 const mongoose = require('mongoose')
 
-var imagemSchema = new Mongoose.Schema({
+var imagemSchema = new mongoose.Schema({
     path: String,
     largura: Number
 });
 
-var figuraSchema = new Mongoose.Schema({
+var figuraSchema = new mongoose.Schema({
     id: String,
     legenda: String,
     imagem: imagemSchema
 });
 
-var entidadeSchema = new Mongoose.Schema({
-    tipo: ['pessoa', 'instituição', 'empresa', 'família'],
+var entidadeSchema = new mongoose.Schema({
+    tipo: {
+        type: String,
+        enum : ['pessoa', 'instituição', 'empresa', 'família'],
+        default: 'pessoa'
+    },
     nome: String
 });
 
-var lugarSchema = new Mongoose.Schema({
+var lugarSchema = new mongoose.Schema({
     nome: String,
     norm: String
 });
 
-var refSchema = new Mongoose.Schema({
+var refSchema = new mongoose.Schema({
     entidades: [entidadeSchema],
     lugares: [lugarSchema],
     datas: [String]
 });
 
-var paraSchema = new Mongoose.Schema({
+var paraSchema = new mongoose.Schema({
     refs: refSchema,
     texto: String
 });
 
-var casaSchema = new Mongoose.Schema({
+var casaSchema = new mongoose.Schema({
     id: String,
-    enfiteuta: [String],
+    enfiteutas: [String],
     foro: String,
     desc: [paraSchema],
     vista: String
 });
 
-var comentarioSchema = new Mongoose.Schema({
+var comentarioSchema = new mongoose.Schema({
     autor: String,
     data: String,
     texto: String
 });
 
-var ruaSchema = new Mongoose.Schema({
+var ruaSchema = new mongoose.Schema({
     _id: String,
     nome: String,
     figuras: [figuraSchema],

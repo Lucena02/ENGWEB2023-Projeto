@@ -1,6 +1,7 @@
 import json
 import xml.etree.ElementTree as ET
 import re
+import os
 
 
 def parseFiguras(corpo):
@@ -15,29 +16,29 @@ def parseFiguras(corpo):
             img["largura"] = largura
         if path:
             imagem["path"] = path
-        legenda = re.sub(r"\n\s*", "", fig.find("./legenda").text)
+        legenda = re.sub(r"\s*\n\s*", "", fig.find("./legenda").text)
         figura = {"id": figId, "imagem": imagem, "legenda": legenda}
         figuras.append(figura)
     return figuras
 
 
 def parseEntidade(ent):
-    t = ent.text + ent.tail
+    t = str(ent.text) + str(ent.tail)
     entidade = {}
     if "tipo" in ent.attrib:
         tipo = ent.attrib["tipo"]
         entidade["tipo"] = tipo
-    entidade["nome"] = re.sub(r"\n\s*", "", ent.text)
+    entidade["nome"] = re.sub(r"\s*\n\s*", " ", ent.text)
 
     return entidade, t
 
 
 def parseLugar(lug):
-    t = lug.text + lug.tail
-    nome = re.sub(r"\n\s*", "", lug.text)
+    t = str(lug.text) + str(lug.tail)
+    nome = re.sub(r"\s*\n\s*", "", lug.text)
     norm = None
     if "norm" in lug.attrib:
-        norm = lug.arttrib["norm"]
+        norm = lug.attrib["norm"]
 
     lugar = {"nome": nome, "norm": norm}
 
@@ -45,8 +46,8 @@ def parseLugar(lug):
 
 
 def parseData(dat):
-    t = dat.text + dat.tail
-    data = re.sub(r"\n\s*", "", dat.text)
+    t = str(dat.text) + str(dat.tail)
+    data = re.sub(r"\s*\n\s*", "", dat.text)
 
     return data, t
 
@@ -82,11 +83,38 @@ def parseParagrafos(nodo):
     for para in nodo.findall("./para"):
         refs, t = parseRefs(para)
         texto = str(para.text) + t
-        texto = re.sub(r"\n\s*", "", texto)
+        texto = re.sub(r"\s*\n\s*", "", texto)
 
         paragrafos.append({"refs": refs, "texto": texto})
 
     return paragrafos
+
+
+def parseDesc(casa):
+    paragrafos = []
+    for desc in casa.findall("./desc"):
+        paragrafos.append(parseParagrafos(desc))
+    return paragrafos
+
+
+def parseCasa(c):
+    numero = c.find("./número").text
+    enfiteutas = [enf.text for enf in c.findall("./enfiteuta")]
+    foro = ((nodo := c.find("./foro")) and nodo.text) or None
+    desc = parseDesc(c)
+    vista = ((nodo := c.find("./vista")) and nodo.text) or None
+
+    return {"id": numero, "enfiteutas": enfiteutas,
+            "foro": foro, "desc": desc, "vista": vista}
+
+
+def parseCasas(listaCasas):
+    casas = []
+    for lista in listaCasas:
+        for casa in lista.findall("./casa"):
+            casas.append(parseCasa(casa))
+
+    return casas
 
 
 def parseXML(xmlFile):
@@ -96,19 +124,23 @@ def parseXML(xmlFile):
     rua = tree.getroot()
 
     meta = rua.find("./meta")
-    objeto["_id"] = re.sub(r"\n\s*", "", meta.find("./número").text)
-    objeto["nome"] = re.sub(r"\n\s*", "", meta.find("./nome").text)
+    objeto["_id"] = re.sub(r"\s*\n\s*", "", meta.find("./número").text)
+    objeto["nome"] = re.sub(r"\s*\n\s*", "", meta.find("./nome").text)
 
     corpo = rua.find("./corpo")
 
     objeto["figuras"] = parseFiguras(corpo)
     objeto["paragrafos"] = parseParagrafos(corpo)
+    objeto["casas"] = parseCasas(corpo.findall("./lista-casas"))
 
     return objeto
 
 
 def main():
-    dataset = parseXML("../Dataset/texto/MRB-01-RuaDoCampo.xml")
+    dataset = []
+
+    for xmlFile in os.listdir("./texto"):
+        dataset.append(parseXML(f"./texto/{xmlFile}"))
 
     with open("../Dataset/dataset.json", "w") as jsonFile:
         json.dump(dataset, jsonFile, ensure_ascii=False)
