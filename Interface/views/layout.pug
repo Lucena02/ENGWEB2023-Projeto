@@ -3,5 +3,17 @@ html
   head
     title Ruas de Braga 🤘
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/w3.css')
+    script(src='/javascripts/teste.js')
   body
     block content
+    .topbar
+
+      .menus
+        ul
+          li
+            span.menu-text.selected Home
+          li
+            a.menu-text(href="/login") Login  
+        div.centrado
+          | Ruas de Braga
