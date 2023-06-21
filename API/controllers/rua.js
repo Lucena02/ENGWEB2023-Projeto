@@ -1,9 +1,25 @@
 const Rua = require('../models/rua');
 
+function parseQuery(query) 
+{
+    let r = {};
+    for (var key in query)
+    {
+        let value = query[key];
+        if (key.includes("_like"))
+        {
+            key = key.replace("_like", "");
+            value =  new RegExp(`${value}`); 
+        }
+        r[key] = value;
+    }
+    return r;
+}
+
 // Retornar lista de ruas (query para filtros)
 module.exports.listaRuas = (query) => {
     return Rua
-    .find(query)
+    .find(parseQuery(query))
     .setOptions({ sanitizeFilter: true })
     .sort({_id:1})
     .then(lista => {
