@@ -104,7 +104,7 @@ def parseCasa(c):
     desc = parseDesc(c)
     vista = ((nodo := c.find("./vista")) and nodo.text) or None
 
-    return {"id": numero, "enfiteutas": enfiteutas,
+    return {"numero": numero, "enfiteutas": enfiteutas,
             "foro": foro, "desc": desc, "vista": vista}
 
 
@@ -124,7 +124,7 @@ def parseXML(xmlFile):
     rua = tree.getroot()
 
     meta = rua.find("./meta")
-    objeto["_id"] = re.sub(r"\s*\n\s*", "", meta.find("./número").text)
+    objeto["_id"] = int(re.sub(r"\s*\n\s*", "", meta.find("./número").text))
     objeto["nome"] = re.sub(r"\s*\n\s*", "", meta.find("./nome").text)
 
     corpo = rua.find("./corpo")

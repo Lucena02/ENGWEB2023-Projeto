@@ -37,7 +37,7 @@ var paraSchema = new mongoose.Schema({
 });
 
 var casaSchema = new mongoose.Schema({
-    id: String,
+    numero: String,
     enfiteutas: [String],
     foro: String,
     desc: [paraSchema],
@@ -51,7 +51,7 @@ var comentarioSchema = new mongoose.Schema({
 });
 
 var ruaSchema = new mongoose.Schema({
-    _id: String,
+    _id: Number,
     nome: String,
     figuras: [figuraSchema],
     paragrafos: [paraSchema],

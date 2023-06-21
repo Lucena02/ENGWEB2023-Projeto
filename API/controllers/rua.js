@@ -4,6 +4,7 @@ const Rua = require('../models/rua');
 module.exports.listaRuas = (query) => {
     return Rua
     .find(query)
+    .setOptions({ sanitizeFilter: true })
     .sort({_id:1})
     .then(lista => {
         return lista;
