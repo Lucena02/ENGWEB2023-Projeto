@@ -8,14 +8,12 @@ def parseFiguras(corpo):
     figuras = []
     for fig in corpo.findall("./figura"):
         figId = fig.attrib["id"]
-        imagem = {}
         img = fig.find("./imagem")
         path = img.attrib["path"]
+        largura = None
         if "largura" in img.attrib:
             largura = img.attrib["largura"]
-            img["largura"] = largura
-        if path:
-            imagem["path"] = path
+        imagem = {"path": path, "largura": largura}
         legenda = re.sub(r"\s*\n\s*", "", fig.find("./legenda").text)
         figura = {"id": figId, "imagem": imagem, "legenda": legenda}
         figuras.append(figura)
@@ -25,10 +23,11 @@ def parseFiguras(corpo):
 def parseEntidade(ent):
     t = str(ent.text) + str(ent.tail)
     entidade = {}
+    tipo = "pessoa"
     if "tipo" in ent.attrib:
         tipo = ent.attrib["tipo"]
-        entidade["tipo"] = tipo
     entidade["nome"] = re.sub(r"\s*\n\s*", " ", ent.text)
+    entidade["tipo"] = re.sub(r"\s*\n\s*", " ", tipo)
 
     return entidade, t
 
@@ -38,7 +37,7 @@ def parseLugar(lug):
     nome = re.sub(r"\s*\n\s*", "", lug.text)
     norm = None
     if "norm" in lug.attrib:
-        norm = lug.attrib["norm"]
+        norm = re.sub(r"\s*\n\s*", " ", lug.attrib["norm"])
 
     lugar = {"nome": nome, "norm": norm}
 
