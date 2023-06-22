@@ -53,6 +53,16 @@ router.post('/ruas', function(req, res, next) {
     });
 });
 
+router.post('/ruas/addCasa/:id', function(req, res, next) {
+    Rua.addCasa(req.params.id, req.body)
+    .then(resposta => {
+        res.status(201).jsonp(resposta);
+    })
+    .catch(erro => {
+        res.status(501).jsonp(erro);
+    });
+});
+
 router.put('/ruas', function(req, res, next) {
     Rua.updateRua(req.body._id, req.body)
     .then(resposta => {
