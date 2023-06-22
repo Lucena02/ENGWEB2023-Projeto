@@ -13,6 +13,16 @@ router.get('/ruas', function(req, res, next) {
     });
 });
 
+router.get('/ruas/nomes', function(req, res, next) {
+    Rua.getNomesRuas(req.query)
+    .then(ruas => {
+        res.status(200).jsonp(ruas);
+    })
+    .catch(erro => {
+        res.status(500).jsonp(erro);
+    });
+});
+
 router.get('/ruas/:id', function(req, res, next) {
     Rua.getRua(req.params.id)
     .then(rua => {

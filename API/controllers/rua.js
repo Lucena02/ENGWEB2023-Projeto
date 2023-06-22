@@ -89,3 +89,15 @@ module.exports.deleteRua = (id) => {
         return erro;
     });
 };
+
+module.exports.getNomesRuas = (query) => {
+    return Rua
+    .distinct("nome", parseQuery(query))
+    .sort()
+    .then(lista => {
+        return lista;
+    })
+    .catch(erro => {
+        return erro;
+    });
+}
