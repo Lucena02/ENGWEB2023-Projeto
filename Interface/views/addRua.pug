@@ -1,0 +1,30 @@
+extends layout
+
+block content
+
+
+		header.w3-container
+			h2 Adicionar Rua
+        
+		form(method="POST")
+			label Nome
+			input.w3-input.w3-round(type="text" name="rua")
+			br
+			label UPLOAD IMAGEM AQUI
+			label Legenda
+			input.w3-input.w3-round(type="text" name="legenda")
+			br
+			label Descrição 
+			input.w3-input.w3-round(type="text" name="texto")
+			label Casas ???
+			input.w3-input.w3-round(type="text" name="temporario")
+			
+
+			fieldset
+				legend TPC 
+
+				each val in [1, 2, 3, 4, 5, 6, 7, 8]
+					input.w3-check(type="checkbox" name="tpc"+val value="1")
+					label= "TPC" + val
+
+			button.w3-btn.w3-mb-2(type="submit") Add
