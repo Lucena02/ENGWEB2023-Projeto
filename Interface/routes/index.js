@@ -24,4 +24,9 @@ router.get('/rua/:id', function(req, res, next) {
     })
 });
 
+
+router.get('rua/register', function(req,res,next) {
+  axios.post("http://localhost:8000/")
+})
+
 module.exports = router;

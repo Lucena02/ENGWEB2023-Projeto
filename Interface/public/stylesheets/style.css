@@ -4,74 +4,10 @@ body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-.topbar {
-	width: 100vw;
-	opacity: 100%;
-	margin: 0px;
-	left: 0;
-	top: 0vh;
-	position:absolute;
-	border: black 1px;
-	z-index: 2;
-	
-}
-
-a, a:visited, a:hover, a:active {
-  color: inherit;
-}
-
-.menus {
-	position: relative;
-	height: 30%;
-	width: 100%;
-	left: 0px;
-	bottom: -70%;
-	text-align: center;
-	background-color: #0B2239;
-	opacity: 75%;
-	z-index: 3;
-
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	align-items: center;
-	justify-content: center;
-}
-
-.menus ul {
-	height: 100%;
-	width: 100%;
-	position: 50% 0%;
-}
-
-.menus ul li {
-	border-right: 3px;
-	border-color: white;
-	height: 100%;
-	display: table-cell;
-}
-
-.menus ul li span {
-	text-align: center;
-	font-size-adjust: 100%;
-	text-decoration: none;
-}
-
-
-.topbar *:hover {
-	background-color: white;
-	color: black;
-}
-
-.selected{
-	background-color: white;
-	color: black;
-	border-color: #0B2239;
-}
 
 .content {
 	position:relative;
-	top: var(--topbarHeight);
+	top: 20px;
 }
 
 
@@ -95,7 +31,9 @@ a, a:visited, a:hover, a:active {
 	margin-left: 20px; /* Adjust this value as needed */
 }
 
-
+.deslocaDir {
+	text-align: right;
+}
 
 
 
@@ -185,4 +123,86 @@ a, a:visited, a:hover, a:active {
 @keyframes fade {
   from {opacity: .4}
   to {opacity: 1}
+}
+
+
+ /* Navbar container */
+.navbar {
+	width: 100vw;
+	opacity: 100%;
+	margin: 0px;
+	left: 0;
+	top: 0vh;
+	position: fixed;
+	border: black 1px;
+	z-index: 2;
+	overflow: hidden;
+	background-color: #333;
+	font-family: Arial;
+}
+
+.navbar a {
+	float: left;
+	font-size: 16px;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+  }
+  
+  .dropdown {
+	float: left;
+	overflow: hidden;
+  }
+  
+  .dropdown .dropbtn {
+	cursor: pointer;
+	font-size: 16px;  
+	border: none;
+	outline: none;
+	color: white;
+	padding: 14px 16px;
+	background-color: inherit;
+	font-family: inherit;
+	margin: 0;
+  }
+  
+  .navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+	background-color: grey;
+  }
+  
+  .dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+  }
+  
+  .dropdown-content a {
+	float: none;
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+  }
+  
+  .dropdown-content a:hover {
+	background-color: #ddd;
+  }
+  
+  .show {
+	display: block;
+  }
+
+.navbar-right{
+	float: right;
+}
+
+.navbar-mid{
+	display: flex;
+	justify-content: center;
+	align-items: center; 
 }

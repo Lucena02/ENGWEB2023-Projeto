@@ -2,18 +2,42 @@ doctype html
 html
   head
     title Ruas de Braga 🤘
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/w3.css')
     script(src='/javascripts/teste.js')
+    style
+      | body {
+      |   position: relative;
+      | }
+      | body::before {
+      |   content: '';
+      |   position: fixed;
+      |   top: 0;
+      |   left: 0;
+      |   width: 100%;
+      |   height: 100%;
+      |   background-image: url("/images/braga.jpg");
+      |   background-repeat: no-repeat;
+      |   background-size: cover;
+      |   opacity: 0.3;
+      |   z-index: -1;
+      | }
+
   body
     block content
-    .topbar
+    div.navbar
+      a(href='/') Home
+      div.dropdown
+        button(onclick="um()").dropbtn Ruas
+          i.fa.fa-caret-down
+        div#myDropdown.dropdown-content
+          a(href="#") Link 1
+          a(href="#") Link 2
+          a(href="#") Link 3
+      div.navbar-right
+        a(href="#") Login
+        a(href="#") Register
+      div.navbar-mid 
+        p(style="color:white;") Ruas de Braga
 
-      .menus
-        ul
-          li
-            span.menu-text.selected Home
-          li
-            a.menu-text(href="/login") Login  
-        div.centrado
-          | Ruas de Braga
