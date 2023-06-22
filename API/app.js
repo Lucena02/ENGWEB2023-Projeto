@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+var jwt = require('jsonwebtoken')
 
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb://127.0.0.1/EWruasDeBraga';
@@ -15,6 +16,30 @@ db.on('open', function() {
 var indexRouter = require('./routes/index');
 
 var app = express();
+
+app.use(function(req, res, next){
+  var myToken 
+  if(req.query && req.query.token)
+    myToken = req.query.token
+  else if(req.body && req.body.token) 
+    myToken = req.body.token
+  else
+    myToken = false
+  
+    if(myToken){
+      jwt.verify(myToken, "EngWeb2023", function(e, payload){
+        if(e){
+          res.status(401).jsonp({error: e})
+        }
+        else{
+          next()
+        }
+      })
+    }
+    else{
+      res.status(401).jsonp({error: "Token inexistente!"})
+    }
+})
 
 app.use(logger('dev'));
 app.use(express.json());
