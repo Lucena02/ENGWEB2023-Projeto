@@ -28,9 +28,17 @@ router.get('/rua/:id', function(req, res, next) {
     })
 });
 
+
 // Tratamento do Register
-router.get('rua/register', function(req,res,next) {
+router.get('/register', function(req,res,next) {
   res.render('registerForm')
+})
+
+
+
+// Tratamento do Login
+router.get('/login', function(req, res){
+  res.render('loginForm')
 })
 
 router.post('/login', function(req, res){
@@ -42,11 +50,6 @@ router.post('/login', function(req, res){
     .catch(e =>{
       res.render('error', {error: e, message: "Credenciais inválidas"})
     })
-})
-
-// Tratamento do Login
-router.get('/login', function(req, res){
-  res.render('loginForm')
 })
 
 router.post('/login', function(req, res){
