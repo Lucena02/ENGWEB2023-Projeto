@@ -45,7 +45,7 @@ module.exports.getRua = id => {
 // Retornar uma rua pelo nome
 module.exports.getRuaNome = (nome) => {
     return Rua
-        .findOne({nome: nome})
+    .findOne({nome: nome})
     .then(rua => {
         return rua;
     })
@@ -82,6 +82,29 @@ module.exports.updateRua = (id, rua) => {
 module.exports.deleteRua = (id) => {
     return Rua
     .deleteOne({_id: id})
+    .then(resposta => {
+        return resposta;
+    })
+    .catch(erro => {
+        return erro;
+    });
+};
+
+module.exports.getNomesRuas = (query) => {
+    return Rua
+    .distinct("nome", parseQuery(query))
+    .sort()
+    .then(lista => {
+        return lista;
+    })
+    .catch(erro => {
+        return erro;
+    });
+};
+
+module.exports.addCasa = (idRua, casa) => {
+    return Rua
+    .updateOne({_id : idRua}, {$push: {casas: casa}})
     .then(resposta => {
         return resposta;
     })

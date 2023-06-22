@@ -24,8 +24,37 @@ router.get('/rua/:id', function(req, res, next) {
     })
 });
 
+// Tratamento do Register
+router.get('rua/register', function(req,res,next) {
+  res.render('registerForm')
+})
 
+router.post('/login', function(req, res){
+  axios.post('http://localhost:8003/users/register', req.body)
+    .then(response => {
+      res.cookie('token', response.data.token)
+      res.redirect('/')
+    })
+    .catch(e =>{
+      res.render('error', {error: e, message: "Credenciais inválidas"})
+    })
+})
 
+// Tratamento do Login
+router.get('/login', function(req, res){
+  res.render('loginForm')
+})
+
+router.post('/login', function(req, res){
+  axios.post('http://localhost:8003/users/login', req.body)
+    .then(response => {
+      res.cookie('token', response.data.token)
+      res.redirect('/')
+    })
+    .catch(e =>{
+      res.render('error', {error: e, message: "Credenciais inválidas"})
+    })
+})
 
 
 module.exports = router;

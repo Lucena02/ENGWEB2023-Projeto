@@ -29,7 +29,7 @@ router.post('/', auth.verificaAcesso, function(req, res){
 router.post('/register', auth.verificaAcesso, function(req, res) {
   var d = new Date().toISOString().substring(0,19)
   userModel.register(new userModel({ username: req.body.username, name: req.body.name, email:req.body.email,
-                filiation: req.body.level,level: req.body.level, active: true, dateCreated: d }), 
+                filiation: req.body.filiation,level: req.body.level, active: true, dateCreated: d }), 
                 req.body.password, 
                 function(err, user) {
                   if (err) 

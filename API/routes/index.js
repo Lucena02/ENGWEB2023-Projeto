@@ -13,6 +13,16 @@ router.get('/ruas', function(req, res, next) {
     });
 });
 
+router.get('/ruas/nomes', function(req, res, next) {
+    Rua.getNomesRuas(req.query)
+    .then(ruas => {
+        res.status(200).jsonp(ruas);
+    })
+    .catch(erro => {
+        res.status(500).jsonp(erro);
+    });
+});
+
 router.get('/ruas/:id', function(req, res, next) {
     Rua.getRua(req.params.id)
     .then(rua => {
@@ -35,6 +45,16 @@ router.get('/ruas/nome/:nome', function(req, res, next) {
 
 router.post('/ruas', function(req, res, next) {
     Rua.addRua(req.body)
+    .then(resposta => {
+        res.status(201).jsonp(resposta);
+    })
+    .catch(erro => {
+        res.status(501).jsonp(erro);
+    });
+});
+
+router.post('/ruas/addCasa/:id', function(req, res, next) {
+    Rua.addCasa(req.params.id, req.body)
     .then(resposta => {
         res.status(201).jsonp(resposta);
     })
