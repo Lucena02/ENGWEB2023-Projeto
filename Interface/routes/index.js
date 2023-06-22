@@ -14,6 +14,10 @@ router.get('/', function(req, res, next) {
 });
 
 
+router.get('/rua/register', function(req,res,next) {
+  res.render('addRua', {});
+})
+
 router.get('/rua/:id', function(req, res, next) {
   axios.get("http://localhost:8000/ruas/" + req.params.id)
     .then(response => {
@@ -25,8 +29,6 @@ router.get('/rua/:id', function(req, res, next) {
 });
 
 
-router.get('rua/register', function(req,res,next) {
-  axios.post("http://localhost:8000/")
-})
+
 
 module.exports = router;
