@@ -1,42 +1,35 @@
 extends layout
 
 block content
-	
-			
-	.content
-		div.deslocaDir
-			a(href="http://localhost:8001/rua/register") Adicionar Nova Rua
-		- var c = 0
-		- var j = 0
-		each i in data
-			.contentor
-				.content-left
-					ul
-						li ID: #{i._id}
-						li Nome: #{i.nome}
-						li
-							a(href=`http://localhost:8001/rua/${i._id}`) Informação Sobre as Casas
+    doctype html
+    head
+        style
 
-						button(onclick=`myFunction(${i.paragrafos.length}, ${j})`) Mais informação
-						each p in i.paragrafos
-							p#myDIV(style="display: none") #{p.texto}
-						- j += i.paragrafos.length
+          | .video-background {
+          |   position: fixed;
+          |   top: 0;
+          |   left: 0;
+          |   width: 100%;
+          |   height: 100%;
+          |   z-index: -1;
+          |   overflow: hidden;
+          | }
 
-				.content-right
-					div.slideshow-container 
-						each f in i.figuras 
+          | .video-background video {
+          |   position: absolute;
+          |   opacity: 1;
+          |   top: 50%;
+          |   left: 50%;
+          |   transform: translate(-50%, -50%);
+          |   min-width: 100%;
+          |   min-height: 100%;
+          | }
+    body
+        .video-background
+            video(src="images/vid.mp4" autoplay loop muted)
+    p.tituloMain 
+        | Fica a saber mais 
 
-							- var te = i.figuras.length 
-							div.mySlides.fade
-								img(src=f.imagem.path alt='foto' style='width:500px; height:200px;')
-								//div.text #{f.legenda}
-						a.prev(onclick=`plusSlides(-1,${te}, ${c})`) &#10094;
-						a.next(onclick=`plusSlides(1,${te}, ${c})`) &#10095;
-					br 
-					div(style="text-align:center")
-						- var h = te
-						while h > 0
-							span.dot(onclick=`currentSlide(${h},${te},${c})`)
-							- h--
-						- c += te
-			hr
+    div.button-container
+        a(href="/rua")
+            button.centered-button.w3-button.w3-white.w3-border Aventura-te

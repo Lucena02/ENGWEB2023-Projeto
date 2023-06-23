@@ -134,11 +134,10 @@ body {
 	left: 0;
 	top: 0vh;
 	position: fixed;
-	border: black 1px;
-	z-index: 2;
 	overflow: hidden;
 	background-color: #333;
 	font-family: Arial;
+	z-index: 999;
 }
 
 .navbar a {
@@ -173,11 +172,27 @@ body {
   
   .dropdown-content {
 	display: none;
-	position: absolute;
+	position: fixed;
 	background-color: #f9f9f9;
 	min-width: 160px;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	z-index: 1;
+	z-index: 9999; 	
+  }
+
+
+  .column {
+	/* Adjust the width of each column as needed */
+	width: 100%;
+  
+	/* Add any additional styling for the columns */
+  }
+  
+  .column a {
+	/* Styling for the links inside each column */
+	display: none;
+	padding: 12px 16px;
+	text-decoration: none;
+	color: black;
   }
   
   .dropdown-content a {
@@ -194,7 +209,7 @@ body {
   }
   
   .show {
-	display: block;
+	display: flex;
   }
 
 .navbar-right{
@@ -219,3 +234,25 @@ body {
 	font-weight: bold;
 	font-size: 16px;
 }
+
+
+.tituloMain{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 40vh;
+	text-align: center;
+	font-weight: bold;
+	font-size: 30px;
+  }
+
+
+  .button-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .centered-button {
+	text-align: center;
+  }

@@ -6,6 +6,21 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/w3.css')
     script(src='/javascripts/teste.js')
+    div.navbar
+      a(href='/') Home
+      div.dropdown
+        button(onclick="um()").dropbtn Ruas
+          i.fa.fa-caret-down
+        div#myDropdown.dropdown-content
+          div.column
+            a(href="#") Link 1
+            a(href="#") Link 2
+            a(href="#") Link 3
+      div.navbar-right
+        a(href="/login") Login
+        a(href="/register") Register
+      div.navbar-mid 
+        p(style="color:white;") Ruas de Braga
     style
       | body {
       |   position: relative;
@@ -26,18 +41,5 @@ html
 
   body
     block content
-    div.navbar
-      a(href='/') Home
-      div.dropdown
-        button(onclick="um()").dropbtn Ruas
-          i.fa.fa-caret-down
-        div#myDropdown.dropdown-content
-          a(href="#") Link 1
-          a(href="#") Link 2
-          a(href="#") Link 3
-      div.navbar-right
-        a(href="/login") Login
-        a(href="/register") Register
-      div.navbar-mid 
-        p(style="color:white;") Ruas de Braga
+
 

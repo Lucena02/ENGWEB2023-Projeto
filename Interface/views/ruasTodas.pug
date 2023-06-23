@@ -1,0 +1,42 @@
+extends layout
+
+block content
+	
+			
+	.content
+		div.deslocaDir
+			a(href="http://localhost:8001/rua/register") Adicionar Nova Rua
+		- var c = 0
+		- var j = 0
+		each i in data
+			.contentor
+				.content-left
+					ul
+						li ID: #{i._id}
+						li Nome: #{i.nome}
+						li
+							a(href=`http://localhost:8001/rua/${i._id}`) Informação Sobre as Casas
+
+						button(onclick=`myFunction(${i.paragrafos.length}, ${j})`) Mais informação
+						each p in i.paragrafos
+							p#myDIV(style="display: none") #{p.texto}
+						- j += i.paragrafos.length
+
+				.content-right
+					div.slideshow-container 
+						each f in i.figuras 
+
+							- var te = i.figuras.length 
+							div.mySlides.fade
+								img(src=f.imagem.path alt='foto' style='width:500px; height:200px;')
+								//div.text #{f.legenda}
+						a.prev(onclick=`plusSlides(-1,${te}, ${c})`) &#10094;
+						a.next(onclick=`plusSlides(1,${te}, ${c})`) &#10095;
+					br 
+					div(style="text-align:center")
+						- var h = te
+						while h > 0
+							span.dot(onclick=`currentSlide(${h},${te},${c})`)
+							- h--
+						- c += te
+			hr
