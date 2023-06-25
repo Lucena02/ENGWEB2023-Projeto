@@ -1,42 +1,40 @@
 extends layout
-
-block content
 	
-			
+block content	
 	.content
 		div.deslocaDir
 			a(href="http://localhost:8001/rua/register") Adicionar Nova Rua
-		- var c = 0
-		- var j = 0
-		each i in data
-			.contentor
-				.content-left
-					ul
-						li ID: #{i._id}
-						li Nome: #{i.nome}
-						li
-							a(href=`http://localhost:8001/rua/${i._id}`) Informação Sobre as Casas
 
-						button(onclick=`myFunction(${i.paragrafos.length}, ${j})`) Mais informação
-						each p in i.paragrafos
-							p#myDIV(style="display: none") #{p.texto}
-						- j += i.paragrafos.length
 
-				.content-right
-					div.slideshow-container 
-						each f in i.figuras 
+	.album.py-5
+		.container
+			.row.row-cols-1.row-cols-sm-2.row-cols-md-4.g-3
+				each i in data
+					.col
+						
+						.card.shadow-sm
+							svg.bd-placeholder-img.card-img-top(width="150px", height="150px", xmlns="http://www.w3.org/2000/svg", role="img", aria-label="Placeholder: Thumbnail", preserveAspectRatio="xMidYMid slice", focusable="false")
+								a(href="http://localhost:8001/rua/" + i._id)
+									rect(width="270px", height="150px" fill="white")
+									
+									//image(src=i.figuras[0].imagem.path alt="foto")
+									
+									image(xlink:href=i.figuras[0].imagem.path height="150px" width="270px")
+									
+									text(x="50%", y="50%", fill="#eceeef", dy=".3em") 
+							.card-body
+								p.card-text 
+									- var c = 0
+									for char in i.paragrafos[0].texto
+										if c == 13
+											- break 
+										if char == ' '
+											- c += 1
+										| #{char}
+									| ...
+								.d-flex.justify-content-between.align-items-center
+									div.btn-group
+										//button.btn.btn-sm.btn-outline-secondary(type="button") View
+									small.text-body-secondary #{i.nome}
 
-							- var te = i.figuras.length 
-							div.mySlides.fade
-								img(src=f.imagem.path alt='foto' style='width:500px; height:200px;')
-								//div.text #{f.legenda}
-						a.prev(onclick=`plusSlides(-1,${te}, ${c})`) &#10094;
-						a.next(onclick=`plusSlides(1,${te}, ${c})`) &#10095;
-					br 
-					div(style="text-align:center")
-						- var h = te
-						while h > 0
-							span.dot(onclick=`currentSlide(${h},${te},${c})`)
-							- h--
-						- c += te
-			hr
+
