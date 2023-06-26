@@ -57,3 +57,30 @@ window.onclick = function(e) {
     }
   }
 }
+
+
+
+function customSplit(str, separator) {
+  var result = [];
+  var currentWord = '';
+  
+  for (var i = 0; i < str.length; i++) {
+    var char = str[i];
+    
+    // Check if the current character matches the separator
+    if (char === separator) {
+      // Add the current word to the result array
+      result.push(currentWord);
+      // Reset the current word for the next iteration
+      currentWord = '';
+    } else {
+      // Append the character to the current word
+      currentWord += char;
+    }
+  }
+  
+  // Add the last word to the result array
+  result.push(currentWord);
+  
+  return result;
+}

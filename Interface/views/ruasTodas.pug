@@ -1,0 +1,40 @@
+extends layout
+	
+block content	
+	.content
+		div.deslocaDir
+			a(href="http://localhost:8001/rua/register") Adicionar Nova Rua
+
+
+	.album.py-5
+		.container
+			.row.row-cols-1.row-cols-sm-2.row-cols-md-4.g-3
+				each i in data
+					.col
+						
+						.card.shadow-sm
+							svg.bd-placeholder-img.card-img-top(width="150px", height="150px", xmlns="http://www.w3.org/2000/svg", role="img", aria-label="Placeholder: Thumbnail", preserveAspectRatio="xMidYMid slice", focusable="false")
+								a(href="http://localhost:8001/rua/" + i._id)
+									rect(width="270px", height="150px" fill="white")
+									
+									//image(src=i.figuras[0].imagem.path alt="foto")
+									
+									image(xlink:href=i.figuras[0].imagem.path height="150px" width="270px")
+									
+									text(x="50%", y="50%", fill="#eceeef", dy=".3em") 
+							.card-body
+								p.card-text 
+									- var c = 0
+									for char in i.paragrafos[0].texto
+										if c == 13
+											- break 
+										if char == ' '
+											- c += 1
+										| #{char}
+									| ...
+								.d-flex.justify-content-between.align-items-center
+									div.btn-group
+										//button.btn.btn-sm.btn-outline-secondary(type="button") View
+									small.text-body-secondary #{i.nome}
+
+

@@ -4,15 +4,18 @@ var axios = require("axios");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  res.render('index');
+});
+
+router.get('/rua', function(req, res, next) {
   axios.get("http://localhost:8000/ruas")
     .then(response => {
-      res.render('index', { data: response.data});
+      res.render('ruasTodas', { data: response.data});
     })
     .catch(erro => {
       res.render("error", {message: "Erro ao obter pagina inicial", error : erro})
     })
 });
-
 
 router.get('/rua/register', function(req,res,next) {
   res.render('addRua', {});
@@ -41,7 +44,7 @@ router.get('/login', function(req, res){
   res.render('loginForm')
 })
 
-router.post('/login', function(req, res){
+router.post('/register', function(req, res){
   axios.post('http://localhost:8003/users/register', req.body)
     .then(response => {
       res.cookie('token', response.data.token)
