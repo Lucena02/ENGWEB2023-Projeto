@@ -4,6 +4,27 @@ import re
 import os
 
 
+IMAGENSATUAIS = os.listdir("./atual")
+
+
+def figurasAtuais(idRua, nome):
+    global IMAGENSATUAIS
+    figuras, numFiguras = [], 0
+    for imagem in IMAGENSATUAIS:
+        if re.match(fr'^{idRua}-', imagem):
+            numFiguras += 1
+            img = {
+                    "_id": f"MRB-{idRua}-atual_{numFiguras}",
+                    "imagem": {
+                        "path": imagem,
+                        "largura": None
+                        },
+                    "legenda": f"{nome} - Vista Atual nº {numFiguras}"
+                   }
+            figuras.append(img)
+    return figuras
+
+
 def parseFiguras(corpo):
     figuras = []
     for fig in corpo.findall("./figura"):
@@ -15,8 +36,9 @@ def parseFiguras(corpo):
             largura = img.attrib["largura"]
         imagem = {"path": path, "largura": largura}
         legenda = re.sub(r"\s*\n\s*", "", fig.find("./legenda").text)
-        figura = {"id": figId, "imagem": imagem, "legenda": legenda}
+        figura = {"_id": figId, "imagem": imagem, "legenda": legenda}
         figuras.append(figura)
+
     return figuras
 
 
@@ -129,6 +151,7 @@ def parseXML(xmlFile):
     corpo = rua.find("./corpo")
 
     objeto["figuras"] = parseFiguras(corpo)
+    objeto["figuras"].extend(figurasAtuais(objeto["_id"], objeto["nome"]))
     objeto["paragrafos"] = parseParagrafos(corpo)
     objeto["casas"] = parseCasas(corpo.findall("./lista-casas"))
 
