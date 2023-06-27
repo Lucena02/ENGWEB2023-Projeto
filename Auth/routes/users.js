@@ -14,6 +14,11 @@ router.get('/', auth.verificaAcesso, function(req, res){
     .catch(e => res.status(500).jsonp({error: e}))
 })
 
+router.post('/logout', (req, res) => {
+  res.clearCookie('token'); // Replace 'jwtToken' with the name of your cookie
+});
+
+
 router.get('/:id', auth.verificaAcesso, function(req, res){
   User.getUser(req.params.id)
     .then(dados => res.status(200).jsonp({dados: dados}))
@@ -22,8 +27,22 @@ router.get('/:id', auth.verificaAcesso, function(req, res){
 
 router.post('/', auth.verificaAcesso, function(req, res){
   User.addUser(req.body)
-    .then(dados => res.status(201).jsonp({dados: dados}))
+    .then(dados => {
+      console.log(dados)
+      res.status(201).jsonp({dados: dados})
+    })
     .catch(e => res.status(500).jsonp({error: e}))
+})
+
+
+
+router.get('/level/:username', auth.verificaAcesso, (req,res) =>{
+  User.getLevel(req.params.username)
+  .then(dados => {
+    console.log(dados)
+    res.status(201).jsonp({dados: dados})
+  })
+  .catch(e => res.status(500).jsonp({error: e}))
 })
 
 router.post('/register', auth.verificaAcesso, function(req, res) {
@@ -36,7 +55,7 @@ router.post('/register', auth.verificaAcesso, function(req, res) {
                     res.jsonp({error: err, message: "Register error: " + err})
                   else{
                     passport.authenticate("local")(req,res,function(){
-                      jwt.sign({ username: req.user.username, level: req.user.level, 
+                      jwt.sign({ username: req.user.username,
                         sub: 'Ruas de Braga ENGWEB2023'}, 
                         "EngWeb2023RuasDeBraga",
                         {expiresIn: 3600},
@@ -50,7 +69,7 @@ router.post('/register', auth.verificaAcesso, function(req, res) {
 })
   
 router.post('/login', passport.authenticate('local'), function(req, res){
-  jwt.sign({ username: req.user.username, level: req.user.level, 
+  jwt.sign({ username: req.user.username, 
     sub: 'Ruas de Braga ENGWEB2023'}, 
     "EngWeb2023RuasDeBraga",
     {expiresIn: 3600},
@@ -59,6 +78,7 @@ router.post('/login', passport.authenticate('local'), function(req, res){
       else res.status(201).jsonp({token: token})
 });
 })
+
 
 router.put('/:id', auth.verificaAcesso, function(req, res) {
   User.updateUser(req.params.id, req.body)
