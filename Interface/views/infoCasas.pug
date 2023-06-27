@@ -4,6 +4,50 @@ block content
 
 			
 	.content
-		p Welcome to #{title}
+		br
+		p.wow Informação sobre a #{data.nome}
+		br 
 
-	p oi
+		for i in data.paragrafos
+			p #{i.texto}
+
+		br
+		p.wow Casas
+			div.deslocaDir
+				a(href="http://localhost:8001/rua/register") 
+					button.w3-button.w3-white.w3-border Adicionar Nova Casa
+			.album.py-5
+				.container
+					
+					.row.row-cols-1.row-cols-sm-2.row-cols-md-4.g-3
+						
+						each i in data.casas
+							.col
+								.card.shadow-sm
+									.card-body
+										p.card-text
+											- var enfis = ""
+											for m in i.enfiteutas
+												- enfis += m
+											| Enfiteuta : #{enfis}
+											- enfis = ""
+
+											if (i.desc[0] != null)
+												p #{i.desc[0].texto}
+
+										.d-flex.justify-content-between.align-items-center
+											div.btn-group
+												button.btn.btn-sm.btn-outline-secondary(type="button") Editar
+											small.text-body-secondary Número da Casa: #{i.numero}
+
+
+
+
+		p.wow Galeria de Fotos 
+			br
+			br
+			//for i in ????
+				img(src=i, alt='foto', style='max-width: 32%')
+
+
+		p.wow Posts

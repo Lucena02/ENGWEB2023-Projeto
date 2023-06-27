@@ -2,6 +2,17 @@ var express = require('express');
 var router = express.Router();
 var axios = require("axios");
 
+
+const fs = require('fs');
+
+// Function to check if a file exists
+function fileExists(filePath) {
+  return fs.existsSync(filePath);
+}
+
+
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');

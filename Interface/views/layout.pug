@@ -9,22 +9,24 @@ html
     script(src='/javascripts/teste.js')
     div.navbar
       a(href='/') Home
-      div.dropdown
-        button(onclick="um()").dropbtn Ruas
+      a(href="/rua") Ruas
+      .dropdown
+        button(onclick="um()").dropbtn Dropdown
           i.fa.fa-caret-down
         div#myDropdown.dropdown-content
           div.column
             a(href="#") Link 1
             a(href="#") Link 2
             a(href="#") Link 3
-      div.navbar-right
-        a(href="/login") Login
-        a(href="/register") Register
-        a(href="/logout") Logout
       div.navbar-mid 
         p(style="color:white;")
         form(role="search")
           input.form-control(type="search", placeholder="Search", aria-label="Search")
+      div.navbar-right
+        a(href="/login") Login
+        a(href="/register") Register
+        a(href="/logout") Logout
+
     style
       | body {
       |   position: relative;
@@ -45,5 +47,3 @@ html
 
   body
     block content
-
-
