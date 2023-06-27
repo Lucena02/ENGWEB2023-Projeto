@@ -33,11 +33,14 @@ router.get('/rua/:id', function(req, res, next) {
 
 
 // Tratamento do Register
-router.get('/register', function(req,res,next) {
+router.get('/register', function(req,res) {
   res.render('registerForm')
 })
 
-
+// Tratamento do Login
+router.get('/logout', function(req, res){
+  res.render('testeLogout')
+})
 
 // Tratamento do Login
 router.get('/login', function(req, res){
@@ -66,5 +69,14 @@ router.post('/login', function(req, res){
     })
 })
 
+router.post('/logout', function(req, res){
+  axios.post('http://localhost:8003/users/logout', req.body)
+    .then(response => {
+      res.redirect('/')
+    })
+    .catch(e =>{
+      res.render('error', {error: e, message: "Logout inválido"})
+    })
+})
 
 module.exports = router;
