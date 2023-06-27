@@ -92,7 +92,7 @@ def parseParagrafos(nodo):
 def parseDesc(casa):
     paragrafos = []
     for desc in casa.findall("./desc"):
-        paragrafos.append(parseParagrafos(desc))
+        paragrafos.extend(parseParagrafos(desc))
     return paragrafos
 
 

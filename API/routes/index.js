@@ -66,6 +66,16 @@ router.get('/ruas/nome/:nome', function(req, res, next) {
     });
 });
 
+router.get('/ruas/data/:data', function(req, res, next) {
+    Rua.listaRuasData(req.params.data)
+    .then(ruas => {
+        res.status(200).jsonp(ruas);
+    })
+    .catch(erro => {
+        res.status(500).jsonp(erro);
+    });
+});
+
 router.post('/ruas', verificaToken, function(req, res, next) {
     Rua.addRua(req.body)
     .then(resposta => {
