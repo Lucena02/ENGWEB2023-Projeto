@@ -44,11 +44,18 @@ router.get('/rua/:id', function(req, res, next) {
 });
 
 
+// Registar uma casa (GET)
 router.get('/rua/:id/regCasa', function(req,res,next) {
   res.render('addCasa');
 })
 
 
+// Atualizar uma casa
+router.get('/rua/:id/updateCasa/:idC', function(req,res,next) {
+  res.render('addCasaU');
+})
+
+// Registar uma casa (POST)
 router.post('/rua/:id/regCasa', function(req, res, next) {
   axios.post("http://localhost:8000/ruas/addCasa/" + req.params.id)
     .then(response => {
@@ -63,7 +70,9 @@ router.post('/rua/:id/regCasa', function(req, res, next) {
 
 
 
-// AUTENTICAÇAO!!!
+
+
+// AUTENTICAÇAO
 
 // Tratamento do Register
 router.get('/register', function(req,res) {

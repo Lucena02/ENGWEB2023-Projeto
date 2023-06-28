@@ -44,10 +44,13 @@ block content
 
 
 		p.wow Galeria de Fotos 
+			div.deslocaDir
+				a(href="http://localhost:8001/rua/" + data._id + "/regCasa") 
+					button.w3-button.w3-white.w3-border Adicionar Nova Imagem
 			br
 			br
-			//for i in ????
-				img(src=i, alt='foto', style='max-width: 32%')
+			for i in data.figuras 
+				img(src=i.imagem.path, alt='foto', style='max-width: 32%')
 
 
 		p.wow Posts
