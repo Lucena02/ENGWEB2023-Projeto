@@ -3,15 +3,6 @@ var router = express.Router();
 var axios = require("axios");
 
 
-const fs = require('fs');
-
-// Function to check if a file exists
-function fileExists(filePath) {
-  return fs.existsSync(filePath);
-}
-
-
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -42,6 +33,27 @@ router.get('/rua/:id', function(req, res, next) {
     })
 });
 
+
+router.get('/rua/:id/regCasa', function(req,res,next) {
+  res.render('addCasa');
+})
+
+
+router.post('/rua/:id/regCasa', function(req, res, next) {
+  axios.post("http://localhost:8000/ruas/addCasa/" + req.params.id)
+    .then(response => {
+        res.render('addCasaC');
+    })
+    .catch(erro => {
+      res.render("error", {message: "erro ao adicionar a rua", error : erro})
+    })
+});
+
+
+
+
+
+// AUTENTICAÇAO!!!
 
 // Tratamento do Register
 router.get('/register', function(req,res) {

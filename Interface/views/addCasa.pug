@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+
+		header.w3-container
+			h2 Adicionar Casa
+        
+		form(method="POST")
+			label Número
+			input.w3-input.w3-round(type="text" name="numero")
+			br
+			// Devia ser uma lista de ENfiteutas, não devia ser só 1
+			label Enfiteuta 
+			input.w3-input.w3-round(type="text" name="enfiteutas")
+			br
+			label Texto
+			input.w3-input.w3-round(type="text" name="texto")
+
+
+			button.w3-btn.w3-mb-2(type="submit") Adicionar
