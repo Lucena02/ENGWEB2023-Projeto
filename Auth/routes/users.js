@@ -14,10 +14,10 @@ router.get('/', auth.verificaAcesso, function(req, res){
     .catch(e => res.status(500).jsonp({error: e}))
 })
 
-router.post('/logout', (req, res) => {
-  res.clearCookie('token'); // Replace 'jwtToken' with the name of your cookie
-});
+router.post('/logout', auth.verificaAcesso, function(req, res){
+  res.status(201).jsonp({ response: true });
 
+})
 
 router.get('/:id', auth.verificaAcesso, function(req, res){
   User.getUser(req.params.id)
@@ -131,3 +131,4 @@ router.delete('/:id', auth.verificaAcesso, function(req, res) {
 })
 
 module.exports = router;
+

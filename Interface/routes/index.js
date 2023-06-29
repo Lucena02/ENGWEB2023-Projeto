@@ -87,7 +87,7 @@ router.post('/logout', function(req, res){
     token = req.cookies.token
   axios.post('http://localhost:8003/users/logout?token='+token, req.body)
     .then(res => {
-      res.cookie('token', "token.destruido")
+      res.clearCookie('token')
       res.redirect('/')
     })
     .catch(e =>{

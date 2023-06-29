@@ -14,7 +14,7 @@ function verificaToken(req, res, next){
         myToken = false;
   
     if(myToken){
-        jwt.verify(myToken, "EngWeb2023", function(e, payload){
+        jwt.verify(myToken, "EngWeb2023RuasDeBraga", function(e, payload){
         if(e){
             res.status(401).jsonp({error: e})
         }
@@ -22,7 +22,9 @@ function verificaToken(req, res, next){
             next()
         }
       })
-    }
+    }else{
+        res.status(401).jsonp({error: "Token inexistente!!"})
+      }
 }
 
 /* GET home page. */
