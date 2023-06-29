@@ -16,7 +16,7 @@ def figurasAtuais(idRua, nome):
             img = {
                     "_id": f"MRB-{idRua}-atual_{numFiguras}",
                     "imagem": {
-                        "path": imagem,
+                        "path": f"../atual/{imagem}",
                         "largura": None
                         },
                     "legenda": f"{nome} - Vista Atual nº {numFiguras}"
