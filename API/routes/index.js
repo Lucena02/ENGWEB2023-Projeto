@@ -63,6 +63,16 @@ router.get('/ruas/lugar/:lugar', function(req, res, next) {
     });
 });
 
+router.get('/ruas/casa/:id', function(req, res, next) {
+    Rua.getCasa(req.params.id)
+    .then(casa => {
+        res.status(200).jsonp(casa);
+    })
+    .catch(erro => {
+        res.status(500).jsonp(erro);
+    });
+});
+
 router.post('/ruas', function(req, res, next) {
     Rua.addRua(req.body)
     .then(resposta => {

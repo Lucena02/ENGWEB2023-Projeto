@@ -1,4 +1,5 @@
 const Rua = require('../models/rua');
+const mongoose = require('mongoose')
 
 function parseQuery(query) 
 {
@@ -76,6 +77,24 @@ module.exports.listaRuasLugar = (lugar) => {
     .sort({_id:1})
     .then(lista => {
         return lista;
+    })
+    .catch(erro => {
+        return erro;
+    });
+};
+
+module.exports.getCasa = (idCasa) => {
+    let id = new mongoose.Types.ObjectId(idCasa);
+    return Rua
+    .aggregate([])
+    .unwind("$casas")
+    .match({ "casas._id": id})
+    .exec()
+    .then(lista => {
+        if (lista[0])
+            return lista[0].casas;
+        else
+            return lista[0];
     })
     .catch(erro => {
         return erro;

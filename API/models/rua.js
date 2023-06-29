@@ -6,7 +6,7 @@ var imagemSchema = new mongoose.Schema({
 });
 
 var figuraSchema = new mongoose.Schema({
-    id: String,
+    _id: String,
     legenda: String,
     imagem: imagemSchema
 });
