@@ -68,6 +68,20 @@ module.exports.listaRuasData = (data) => {
     });
 };
 
+module.exports.listaRuasLugar = (lugar) => {
+    let regex = new RegExp(`${lugar}`, 'gi')
+    return Rua
+    .find({$or: [ { "casas.desc.refs.lugares.nome": regex}, {"paragrafos.refs.lugares.nome": regex} ]})
+    .setOptions({ sanitizeFilter: true })
+    .sort({_id:1})
+    .then(lista => {
+        return lista;
+    })
+    .catch(erro => {
+        return erro;
+    });
+};
+
 // Adicionar um rua
 module.exports.addRua = (rua) => {
     return Rua

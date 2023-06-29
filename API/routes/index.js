@@ -53,6 +53,16 @@ router.get('/ruas/data/:data', function(req, res, next) {
     });
 });
 
+router.get('/ruas/lugar/:lugar', function(req, res, next) {
+    Rua.listaRuasLugar(req.params.lugar)
+    .then(ruas => {
+        res.status(200).jsonp(ruas);
+    })
+    .catch(erro => {
+        res.status(500).jsonp(erro);
+    });
+});
+
 router.post('/ruas', function(req, res, next) {
     Rua.addRua(req.body)
     .then(resposta => {
