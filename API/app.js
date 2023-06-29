@@ -2,7 +2,6 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-var jwt = require('jsonwebtoken')
 
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb://127.0.0.1/EWruasDeBraga';

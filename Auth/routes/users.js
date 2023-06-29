@@ -7,16 +7,12 @@ var auth = require('../auth/auth')
 
 var User = require('../controllers/users')
 
+
 /* GET users listing. */
 router.get('/', auth.verificaAcesso, function(req, res){
   User.list()
     .then(dados => res.status(200).jsonp({dados: dados}))
     .catch(e => res.status(500).jsonp({error: e}))
-})
-
-router.post('/logout', auth.verificaAcesso, function(req, res){
-  res.status(201).jsonp({ response: true });
-
 })
 
 router.get('/:id', auth.verificaAcesso, function(req, res){

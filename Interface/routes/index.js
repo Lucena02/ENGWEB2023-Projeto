@@ -1,10 +1,37 @@
 var express = require('express');
 var router = express.Router();
 var axios = require("axios");
+var jwt = require('jsonwebtoken')
 
 
 const fs = require('fs');
 const { verificaAcesso } = require('../../Auth/auth/auth');
+
+function verificaToken(req, res, next){
+  console.log("oiii")
+  var myToken 
+  if(req.query && req.query.token)
+      myToken = req.query.token;
+  else if(req.body && req.body.token) 
+      myToken = req.body.token;
+  else if(req.cookies && req.cookies.token)
+      myToken = req.cookies.token
+  else
+      myToken = false;
+
+  if(myToken){
+      jwt.verify(myToken, "EngWeb2023RuasDeBraga", function(e, payload){
+      if(e){
+          res.status(401).jsonp({error: e})
+      }
+      else{
+          next()
+      }
+    })
+  }else{
+      res.status(401).jsonp({error: "Token inexistente!!"})
+    }
+}
 
 
 // Function to check if a file exists
@@ -56,7 +83,7 @@ router.get('/rua/:id/updateCasa/:idC', function(req,res,next) {
 })
 
 // Registar uma casa (POST)
-router.post('/rua/:id/regCasa', function(req, res, next) {
+router.post('/rua/:id/regCasa', verificaToken, function(req, res, next) {
   axios.post("http://localhost:8000/ruas/addCasa/" + req.params.id)
     .then(response => {
         res.render('addCasaC');
@@ -89,8 +116,10 @@ router.get('/login', function(req, res){
   res.render('loginForm')
 })
 
-router.post('/register', function(req, res){
-  axios.post('http://localhost:8003/users/register', req.body)
+router.post('/register',verificaToken, function(req, res){
+  if(req.cookies && req.cookies.token)
+    token = req.cookies.token
+  axios.post('http://localhost:8003/users/register?token='+token, req.body)
     .then(response => {
       res.cookie('token', response.data.token)
       res.redirect('/')
@@ -112,21 +141,9 @@ router.post('/login', function(req, res){
 })
 
 
-router.post('/logout', function(req, res){
-  if(req.cookies && req.cookies.token)
-    token = req.cookies.token
-  axios.post('http://localhost:8003/users/logout?token='+token, req.body)
-    .then(res => {
+router.post('/logout', verificaToken, function(req, res){
       res.clearCookie('token')
       res.redirect('/')
-    })
-    .catch(e =>{
-      res.render('error', {error: e, message: "Logout inválido"})
-    })
 })
-
-
-
-
 
 module.exports = router;

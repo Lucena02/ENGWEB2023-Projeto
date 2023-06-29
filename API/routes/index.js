@@ -1,31 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var Rua = require('../controllers/rua')
-var jwt = require('jsonwebtoken')
-
-function verificaToken(req, res, next){
-    console.log("oiii")
-    var myToken 
-    if(req.query && req.query.token)
-        myToken = req.query.token;
-    else if(req.body && req.body.token) 
-        myToken = req.body.token;
-    else
-        myToken = false;
-  
-    if(myToken){
-        jwt.verify(myToken, "EngWeb2023RuasDeBraga", function(e, payload){
-        if(e){
-            res.status(401).jsonp({error: e})
-        }
-        else{
-            next()
-        }
-      })
-    }else{
-        res.status(401).jsonp({error: "Token inexistente!!"})
-      }
-}
 
 /* GET home page. */
 router.get('/ruas', function(req, res, next) {
@@ -78,7 +53,7 @@ router.get('/ruas/data/:data', function(req, res, next) {
     });
 });
 
-router.post('/ruas', verificaToken, function(req, res, next) {
+router.post('/ruas', function(req, res, next) {
     Rua.addRua(req.body)
     .then(resposta => {
         res.status(201).jsonp(resposta);
@@ -88,7 +63,7 @@ router.post('/ruas', verificaToken, function(req, res, next) {
     });
 });
 
-router.post('/ruas/addCasa/:id', verificaToken, function(req, res, next) {
+router.post('/ruas/addCasa/:id', function(req, res, next) {
     Rua.addCasa(req.params.id, req.body)
     .then(resposta => {
         res.status(201).jsonp(resposta);
@@ -98,7 +73,7 @@ router.post('/ruas/addCasa/:id', verificaToken, function(req, res, next) {
     });
 });
 
-router.put('/ruas', verificaToken, function(req, res, next) {
+router.put('/ruas', function(req, res, next) {
     Rua.updateRua(req.body._id, req.body)
     .then(resposta => {
         res.status(204).jsonp(resposta);
@@ -108,7 +83,7 @@ router.put('/ruas', verificaToken, function(req, res, next) {
     });
 });
 
-router.put('/ruas/:id', verificaToken, function(req, res, next) {
+router.put('/ruas/:id', function(req, res, next) {
     Rua.updateRua(req.params.id, req.body)
     .then(resposta => {
         res.status(200).jsonp(resposta);
@@ -118,7 +93,7 @@ router.put('/ruas/:id', verificaToken, function(req, res, next) {
     });
 });
 
-router.delete('/ruas/:id', verificaToken, function(req, res, next) {
+router.delete('/ruas/:id', function(req, res, next) {
     Rua.deleteRua(req.params.id)
     .then(resposta => {
         res.status(200).jsonp(resposta);
