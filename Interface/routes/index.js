@@ -39,6 +39,9 @@ function fileExists(filePath) {
   return fs.existsSync(filePath);
 }
 
+router.get('/map', function(req, res, next) {
+  res.render('TesteAPIgoogle');
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
