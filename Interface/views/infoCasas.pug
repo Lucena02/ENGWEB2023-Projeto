@@ -98,9 +98,9 @@ html
 				for i in data.figuras 
 					img(src=i.imagem.path, alt='foto', style='max-width: 32%')
 			
-			#mapcoords(data-lat=data.pos.latitude data-lng=data.pos.longitude)
-
-			#map
+			if (data.pos.latitude!=0 || data.pos.longitude!=0)
+				#mapcoords(data-lat=data.pos.latitude data-lng=data.pos.longitude)
+				#map
 
 			p.wow Posts
 			
