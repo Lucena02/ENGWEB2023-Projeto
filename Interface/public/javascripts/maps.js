@@ -24,6 +24,13 @@ async function initMap() {
     center: uluru,
     zoom: 15,
   });
+ const marker = new google.maps.Marker({
+    position: uluru,
+    map: map,
+    draggable: false,
+    animation: google.maps.Animation.DROP
+ })
+
 }
 
 initMap();
