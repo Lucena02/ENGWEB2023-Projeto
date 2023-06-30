@@ -8,6 +8,7 @@ html
 		link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
 		link(rel="stylesheet", type="text/css", href="../stylesheets/style.css")
 		script(src='/javascripts/teste.js')
+		script(type="module", src="../javascripts/maps.js")
 		div.navbar
 			a(href='/') Home
 			a(href="/rua") Ruas
@@ -97,14 +98,13 @@ html
 				for i in data.figuras 
 					img(src=i.imagem.path, alt='foto', style='max-width: 32%')
 			
+			#mapcoords(data-lat=data.pos.latitude data-lng=data.pos.longitude)
+
 			#map
 
 			p.wow Posts
 			
 			script(src="https://polyfill.io/v3/polyfill.min.js?features=default")
-			script(type="module", src="../javascripts/maps.js")
-			script.
-				setCoords(33.225488, -111.5955)
 			script.
 				(g => {
 					var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window;
