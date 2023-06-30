@@ -267,3 +267,16 @@ body {
 .muitaInformacao{
 	font-size: 16px;
 }
+
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+
+ #map {
+	height: 80%;
+	width: 80%;
+	margin: auto;
+  }
+  
+
