@@ -1,56 +1,127 @@
-extends layout
 
-block content
+html
+	head
+		title Ruas de Braga 🤘
+		link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css")
+		link(rel='stylesheet', href='/stylesheets/w3.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+		link(rel="stylesheet", type="text/css", href="../stylesheets/style.css")
+		script(src='/javascripts/teste.js')
+		div.navbar
+			a(href='/') Home
+			a(href="/rua") Ruas
+			.dropdown
+				button(onclick="um()").dropbtn Dropdown
+					i.fa.fa-caret-down
+				div#myDropdown.dropdown-content
+					div.column
+						a(href="#") Link 1
+						a(href="#") Link 2
+						a(href="#") Link 3
+			div.navbar-mid 
+				p(style="color:white;")
+				form(role="search")
+					input.form-control(type="search", placeholder="Search", aria-label="Search")
+			div.navbar-right
+				a(href="/login") Login
+				a(href="/register") Register
+				a(href="/logout") Logout
 
-			
-	.content
-		br
-		p.wow Informação sobre a #{data.nome}
-		br 
+	style
+		|	body{
+		|		position: relative;
+		|}
+		|	body::before{
+		|	content: '';
+		|	position: fixed;
+		|	top: 0;
+		|	left: 0;
+		|	width: 100%;
+		|	height: 100%;
+		|	background-image: url("/images/braga.jpg");
+		|	background-repeat: no-repeat;
+		|	background-size: cover;
+		|	opacity: 0.1;
+		|	z-index: -1;
+		|}
+	body
+		.content
+			br
+			p.wow Informação sobre a #{data.nome}
+			br 
 
-		for i in data.paragrafos
-			p.muitaInformacao #{i.texto}
+			for i in data.paragrafos
+				p.muitaInformacao #{i.texto}
 
-		br
-		p.wow Casas
-			div.deslocaDir
-				a(href="http://localhost:8001/rua/" + data._id + "/regCasa") 
-					button.w3-button.w3-white.w3-border Adicionar Nova Casa
-			.album.py-5
-				.container
-					
-					.row.row-cols-1.row-cols-sm-2.row-cols-md-4.g-3
+			br
+			p.wow Casas
+				div.deslocaDir
+					a(href="http://localhost:8001/rua/" + data._id + "/regCasa") 
+						button.w3-button.w3-white.w3-border Adicionar Nova Casa
+				.album.py-5
+					.container
 						
-						each i in data.casas
-							.col
-								.card.shadow-sm
-									.card-body
-										p.card-text
-											- var enfis = ""
-											for m in i.enfiteutas
-												- enfis += m
-											| Enfiteuta : #{enfis}
-											- enfis = ""
+						.row.row-cols-1.row-cols-sm-2.row-cols-md-4.g-3
+							
+							each i in data.casas
+								.col
+									.card.shadow-sm
+										.card-body
+											p.card-text
+												- var enfis = ""
+												for m in i.enfiteutas
+													- enfis += m
+												| Enfiteuta : #{enfis}
+												- enfis = ""
 
-											if (i.desc[0] != null)
-												p #{i.desc[0].texto}
+												if (i.desc[0] != null)
+													p #{i.desc[0].texto}
 
-										.d-flex.justify-content-between.align-items-center
-											div.btn-group
-												button.btn.btn-sm.btn-outline-secondary(type="button") Editar
-											small.text-body-secondary Número da Casa: #{i.numero}
-
-
-
-
-		p.wow Galeria de Fotos 
-			div.deslocaDir
-				a(href="http://localhost:8001/rua/" + data._id + "/regCasa") 
-					button.w3-button.w3-white.w3-border Adicionar Nova Imagem
-			br
-			br
-			for i in data.figuras 
-				img(src=i.imagem.path, alt='foto', style='max-width: 32%')
+											.d-flex.justify-content-between.align-items-center
+												div.btn-group
+													button.btn.btn-sm.btn-outline-secondary(type="button") Editar
+												small.text-body-secondary Número da Casa: #{i.numero}
 
 
-		p.wow Posts
+
+
+			p.wow Galeria de Fotos 
+				div.deslocaDir
+					a(href="http://localhost:8001/rua/" + data._id + "/regCasa") 
+						button.w3-button.w3-white.w3-border Adicionar Nova Imagem
+				br
+				#{data.pos.latitude}
+				#{data.pos.longitude}
+				br
+				for i in data.figuras 
+					img(src=i.imagem.path, alt='foto', style='max-width: 32%')
+			
+			#map
+
+			p.wow Posts
+			
+			script(src="https://polyfill.io/v3/polyfill.min.js?features=default")
+			script(type="module", src="../javascripts/maps.js")
+			script.
+				setCoords(33.225488, -111.5955)
+			script.
+				(g => {
+					var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window;
+					b = b[c] || (b[c] = {});
+					var d = b.maps || (b.maps = {}),
+							r = new Set,
+							e = new URLSearchParams,
+							u = () => h || (h = new Promise(async (f, n) => {
+						await (a = m.createElement("script"));
+						e.set("libraries", [...r] + "");
+						for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+						e.set("callback", c + ".maps." + q);
+						a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+						d[q] = f;
+						a.onerror = () => h = n(Error(p + " could not load."));
+						a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+						m.head.append(a);
+					}));
+					d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n));
+				})({ key: "AIzaSyD3I5SkHuQAG6_kqBuvjl7aPDRn4NYI8w0", v: "weekly" })

@@ -1,13 +1,13 @@
 html
   head
     title Simple Map
-    script(src="https://polyfill.io/v3/polyfill.min.js?features=default")
+    
     link(rel="stylesheet", type="text/css", href="../stylesheets/style.css")
-    script(type="module", src="../javascripts/maps.js")
+   
   body
     #map
-    script.
-        (type="module", src="../javascripts/maps.js")
+    script(src="https://polyfill.io/v3/polyfill.min.js?features=default")
+    script(type="module", src="../javascripts/maps.js")
     script.
       (g => {
         var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window;
