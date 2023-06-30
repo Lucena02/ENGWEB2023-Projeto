@@ -1,5 +1,10 @@
 const mongoose = require('mongoose')
 
+var posSchema = new mongoose.Schema({
+    latitude: Number,
+    longitude: Number
+});
+
 var imagemSchema = new mongoose.Schema({
     path: String,
     largura: Number
@@ -53,6 +58,7 @@ var comentarioSchema = new mongoose.Schema({
 var ruaSchema = new mongoose.Schema({
     _id: Number,
     nome: String,
+    pos: posSchema, 
     figuras: [figuraSchema],
     paragrafos: [paraSchema],
     casas: [casaSchema],

@@ -147,6 +147,7 @@ def parseXML(xmlFile):
     meta = rua.find("./meta")
     objeto["_id"] = int(re.sub(r"\s*\n\s*", "", meta.find("./número").text))
     objeto["nome"] = re.sub(r"\s*\n\s*", "", meta.find("./nome").text)
+    objeto["pos"] = {"latitude": 0, "longitude":  0}
 
     corpo = rua.find("./corpo")
 
