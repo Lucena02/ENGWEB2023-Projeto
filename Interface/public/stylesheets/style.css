@@ -148,6 +148,7 @@ body {
 	padding: 14px 16px;
 	text-decoration: none;
   }
+
   
   .dropdown {
 	float: left;
@@ -280,3 +281,26 @@ body {
   }
   
 
+.caixinha{
+	background-color: white;
+}
+
+.meiodeTudo{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 40vh;
+	text-align: center;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.brincar{
+	background-color: #333;
+	border-color: #333;
+}
+
+.brincar:hover{
+	background-color: grey;
+	border-color: #333;
+}

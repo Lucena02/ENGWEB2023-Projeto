@@ -159,3 +159,47 @@ module.exports.addCasa = (idRua, casa) => {
         return erro;
     });
 };
+
+module.exports.updateCasa = (idCasa, casa) => {
+    return Rua
+    .updateOne(
+        { "casas._id": idCasa },
+        { $set: { "casas.$": casa } }
+      )
+    .then(resposta => {
+        return resposta;
+    })
+    .catch(erro => {
+        return erro;
+    });
+};
+
+
+module.exports.deleteCasa = (idCasa) => {
+    return Rua
+    .update(
+        {},
+        { $pull: { casas: { _id: idCasa } } },
+        { multi: true }
+      )
+    .then(resposta => {
+        return resposta;
+    })
+    .catch(erro => {
+        return erro;
+    });
+};
+
+
+// COMENTARIOS
+
+module.exports.addComentario = (idRua, comentario) => {
+    return Rua
+    .updateOne({_id : idRua}, {$push: {comentarios: comentario}})
+    .then(resposta => {
+        return resposta;
+    })
+    .catch(erro => {
+        return erro;
+    });
+};

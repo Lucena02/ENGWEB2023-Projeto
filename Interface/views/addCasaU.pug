@@ -5,17 +5,17 @@ block content
 
 		header.w3-container
 			h2 Adicionar Casa
-        
+		p oi #{data.numero}
 		form(method="POST")
 			label Número
-			input.w3-input.w3-round(type="text" name="numero" readonly value=)
+			input.w3-input.w3-round(type="text" name="numero" value=data.numero)
 			br
 			// Devia ser uma lista de Enfiteutas, não devia ser só 1
 			label Enfiteuta 
-			input.w3-input.w3-round(type="text" name="enfiteutas" value= )
+			input.w3-input.w3-round(type="text" name="enfiteutas" value=data.enfiteutas)
 			br
 			label Texto
-			input.w3-input.w3-round(type="text" name="texto" value= )
+			input.w3-input.w3-round(type="text" name="desc[0][texto]" value="" )
 
 
 			button.w3-btn.w3-mb-2(type="submit") Adicionar

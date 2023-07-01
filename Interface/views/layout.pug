@@ -22,10 +22,15 @@ html
         p(style="color:white;")
         form(role="search")
           input.form-control(type="search", placeholder="Search", aria-label="Search")
-      div.navbar-right
-        a(href="/login") Login
-        a(href="/register") Register
-        a(href="/logout") Logout
+      if (t == null)
+        div.navbar-right
+          a(href="/login") Login
+          a(href="/register") Register
+      if (t != null) 
+        div.navbar-right
+          a(href="/logout") Logout
+
+      
 
     style
       | body {

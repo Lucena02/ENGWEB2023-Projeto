@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	div(style="top:10px;")
+		h1 De certeza que deseja eliminar a casa dos registos da rua?
+		a(href="http://localhost:8001/rua/" + idRua + "/deleteCasa/" + idCasa + "/S")
+			button.w3-button.w3-white.w3-border Sim
+		a(href="http://localhost:8001/rua/" + idRua) 
+			button.w3-button.w3-white.w3-border Não 

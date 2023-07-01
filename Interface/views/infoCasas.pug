@@ -24,10 +24,14 @@ html
 				p(style="color:white;")
 				form(role="search")
 					input.form-control(type="search", placeholder="Search", aria-label="Search")
-			div.navbar-right
-				a(href="/login") Login
-				a(href="/register") Register
-				a(href="/logout") Logout
+			if (t == null)
+				div.navbar-right
+					a(href="/login") Login
+					a(href="/register") Register
+					a(href="/logout") Logout
+			if (t != null) 
+				div.navbar-right
+					a(href="/logout") Logout
 
 	style
 		|	body{
@@ -81,7 +85,10 @@ html
 
 											.d-flex.justify-content-between.align-items-center
 												div.btn-group
-													button.btn.btn-sm.btn-outline-secondary(type="button") Editar
+													button.btn.btn-sm.btn-outline-secondary(type="button")
+														a(href="/rua/" + data._id + "/updateCasa/" + i._id) Editar
+													button.btn.btn-sm.btn-outline-secondary(type="button")
+														a(href="/rua/" + data._id + "/deleteCasa/" + i._id) Eliminar
 												small.text-body-secondary Número da Casa: #{i.numero}
 
 
@@ -92,18 +99,16 @@ html
 					a(href="http://localhost:8001/rua/" + data._id + "/regCasa") 
 						button.w3-button.w3-white.w3-border Adicionar Nova Imagem
 				br
-				#{data.pos.latitude}
-				#{data.pos.longitude}
 				br
 				for i in data.figuras 
 					img(src=i.imagem.path, alt='foto', style='max-width: 32%')
 			
+			
+			br
+			p.wow Mapa do Local
 			#mapcoords(data-lat=data.pos.latitude data-lng=data.pos.longitude)
 
 			#map
-
-			p.wow Posts
-			
 			script(src="https://polyfill.io/v3/polyfill.min.js?features=default")
 			script.
 				(g => {
@@ -125,3 +130,28 @@ html
 					}));
 					d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n));
 				})({ key: "AIzaSyD3I5SkHuQAG6_kqBuvjl7aPDRn4NYI8w0", v: "weekly" })
+
+			br
+			p.wow Posts
+				
+				form(method="POST")
+					label Nome
+					input.w3-input.w3-round(type="text" name="autor")
+					label Data
+					input.w3-input.w3-round(type="text" name="data")
+					label Comentário
+					input.w3-input.w3-round(type="text" name="texto")
+
+					button.w3-btn.w3-mb-2(type="submit") Publicar
+
+
+				br
+				br
+				hr
+				for i in data.comentarios
+					hr 
+					.card.h-md-100.ecommerce-card-min-width
+						p #{i.autor} 
+						p #{i.data}
+						p #{i.texto}
+					
