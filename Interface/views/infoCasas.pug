@@ -103,12 +103,12 @@ html
 				for i in data.figuras 
 					img(src=i.imagem.path, alt='foto', style='max-width: 32%')
 			
-			
-			br
-			p.wow Mapa do Local
-			#mapcoords(data-lat=data.pos.latitude data-lng=data.pos.longitude)
+			if (data.pos.latitude!=0 || data.pos.longitude!=0)
+				#mapcoords(data-lat=data.pos.latitude data-lng=data.pos.longitude)
+				#map
 
-			#map
+				p.wow Mapa
+			
 			script(src="https://polyfill.io/v3/polyfill.min.js?features=default")
 			script.
 				(g => {
