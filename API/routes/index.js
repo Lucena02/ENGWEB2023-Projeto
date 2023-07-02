@@ -118,6 +118,16 @@ router.post("/ruas/post/:id", function(req,res,next) {
     })
 })
 
+router.delete("/ruas/unpost/:id", function(req,res,next) {
+    Rua.removeComentario(req.params.id)
+    .then(resposta => {
+        res.status(200).jsonp(resposta);
+    })
+    .catch(erro => {
+        res.status(509).jsonp(erro);
+    })
+});
+
 router.put('/ruas', function(req, res, next) {
     Rua.updateRua(req.body._id, req.body)
     .then(resposta => {
