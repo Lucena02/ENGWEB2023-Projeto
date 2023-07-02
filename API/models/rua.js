@@ -43,7 +43,7 @@ var paraSchema = new mongoose.Schema({
 
 var casaSchema = new mongoose.Schema({
     numero: String,
-    enfiteutas: [String],
+    enfiteutas: String,
     foro: String,
     desc: paraSchema,
     vista: String

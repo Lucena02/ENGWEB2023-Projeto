@@ -115,7 +115,7 @@ router.post('/rua/register', upload.single('myFile'), function(req, res) {
   console.log('cdir: ' + __dirname)
   let oldPath = __dirname + '/../' + req.file.path
   console.log('old: ' + oldPath)
-  let newPath = __dirname + "/../atual/"+req.file.originalname
+  let newPath = __dirname + "/../public/atual/"+req.file.originalname
   console.log('new: ' + newPath)
 
   fs.rename(oldPath, newPath, erro => {
@@ -126,7 +126,7 @@ router.post('/rua/register', upload.single('myFile'), function(req, res) {
     _id  : oldPath,
     legenda : req.body.legenda,
     imagem : {
-      path: req.file.originalname,
+      path: "../atual/" + req.file.originalname,
       largura : null
     }
   }
@@ -135,6 +135,7 @@ router.post('/rua/register', upload.single('myFile'), function(req, res) {
 
   delete req.body.legenda
   console.log(req.body)
+  console.log(req.body.figuras[0].imagem)
 
   axios.post("http://localhost:8000/ruas", req.body)
     .then(response => {
