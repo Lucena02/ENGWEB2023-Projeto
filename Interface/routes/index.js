@@ -172,7 +172,7 @@ router.get('/rua/:id/deleteCasa/:idC', verificaToken, function(req,res,next) {
 router.get('/rua/:id/deleteCasa/:idC/S', verificaToken, function(req,res,next) {
   axios.delete("http://localhost:8000/ruas/deleteCasa/" + req.params.idC)
     .then(response => {
-        res.render("/rua/" + req.params.id);
+        res.redirect("/rua/" + req.params.id);
     })
     .catch(erro => {
       res.render("error", {message: "erro ao eliminar uma casa da respetiva rua", error : erro})
@@ -185,7 +185,7 @@ router.get('/rua/:id/deleteCasa/:idC/S', verificaToken, function(req,res,next) {
 router.post('/rua/:id/regCasa', verificaToken, function(req, res, next) {
   let para = {refs: {}, texto: req.body.texto }
   delete req.body.texto
-  req.body.desc = [para]
+  req.body.desc = para
   axios.post("http://localhost:8000/ruas/addCasa/" + req.params.id, req.body)
     .then(response => {
         res.render('addCasaC');
@@ -209,6 +209,9 @@ router.get('/rua/:id/updateCasa/:idC', verificaToken, function(req, res, next) {
 });
 
 router.post('/rua/:id/updateCasa/:idC', verificaToken, function(req,res,next) {
+  let para = {refs: {}, texto: req.body.texto }
+  delete req.body.texto
+  req.body.desc = para
   axios.post("http://localhost:8000/ruas/editCasa/" + req.params.idC, req.body)
     .then(response => {
         res.render('addCasaC');
