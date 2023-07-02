@@ -82,7 +82,7 @@ router.get('/rua', function(req, res) {
 
   let q = ""
     
-  if (req.query && "field" in req.query && "text" in req.query)
+  if (req.query && "field" in req.query && "text" in req.query && req.query.text.trim().length > 0)
   {
     if (req.query.field == "nome")
       q = `?nome_like=.*(?i)${req.query.text}.*`
@@ -189,6 +189,9 @@ router.get('/rua/:id', function(req, res) {
 
 // Publicar Comentário
 router.post('/rua/:id', verificaToken, function(req, res) {
+  req.body.data = Date()
+  req.body.autor = "f"
+  console.log(req.body)
   axios.post("http://localhost:8000/ruas/post/" + req.params.id, req.body)
     .then(response => {
         res.redirect("/rua/" + req.params.id);
@@ -246,7 +249,7 @@ router.post('/rua/:id/regCasa', verificaToken, function(req, res) {
   req.body.desc = para
   axios.post("http://localhost:8000/ruas/addCasa/" + req.params.id, req.body)
     .then(response => {
-        res.render('addCasaC');
+        res.render('addCasaC', {j: req.params.id});
     })
     .catch(erro => {
       res.render("error", {message: "erro ao adicionar a rua", error : erro})
@@ -267,12 +270,13 @@ router.get('/rua/:id/updateCasa/:idC', verificaToken, function(req, res, next) {
 });
 
 router.post('/rua/:id/updateCasa/:idC', verificaToken, function(req,res,next) {
+  let teste = req.params.id;
   let para = {refs: {}, texto: req.body.texto }
   delete req.body.texto
   req.body.desc = para
   axios.post("http://localhost:8000/ruas/editCasa/" + req.params.idC, req.body)
     .then(response => {
-        res.render('addCasaC');
+        res.render('addCasaC', {i: teste});
     })
     .catch(erro => {
       res.render("error", {message: "erro ao tentar editar a Casa", error : erro})
