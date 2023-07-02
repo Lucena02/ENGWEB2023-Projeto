@@ -105,7 +105,7 @@ def parseParagrafos(nodo):
     for para in nodo.findall("./para"):
         r, t = parseRefs(para)
         t = str(para.text) + t
-        t = re.sub(r"\s*\n\s*", "", t)
+        t = re.sub(r"\s*\n\s*", " ", t)
         texto = texto + t + "\n"
         for key in r.keys():
             refs[key].extend(r[key])
