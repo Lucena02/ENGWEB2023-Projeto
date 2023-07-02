@@ -84,7 +84,7 @@ router.post('/rua/register', upload.single('myFile'), function(req, res, next) {
 
   let para = {refs: {}, texto: req.body.texto }
   delete req.body.texto
-  req.body.paragrafos = para
+  req.body.paragrafo = para
   let pos = {latitude: req.body.latitude, longitude: req.body.longitude}
   delete req.body.latitude
   delete req.body.longitude
@@ -93,7 +93,7 @@ router.post('/rua/register', upload.single('myFile'), function(req, res, next) {
   console.log('cdir: ' + __dirname)
   let oldPath = __dirname + '/../' + req.file.path
   console.log('old: ' + oldPath)
-  let newPath = __dirname + '/../atual/' + req.file.originalname
+  let newPath = __dirname + "/../atual/"+req.file.originalname
   console.log('new: ' + newPath)
 
   fs.rename(oldPath, newPath, erro => {
@@ -104,7 +104,7 @@ router.post('/rua/register', upload.single('myFile'), function(req, res, next) {
     _id  : oldPath,
     legenda : req.body.legenda,
     imagem : {
-      path: newPath,
+      path: req.file.originalname,
       largura : null
     }
   }
