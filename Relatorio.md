@@ -127,7 +127,9 @@ Para além da implementação da API da Google, todos os utilizadores podem adic
 
 ## Autenticação
 
+Esta camada aplicacional está, principalmente, responsável por todas as questões relacionadas com a autenticação e registo de utilizadores da plataforma. Como referido acima, recorremos à utilização de **jsonwebtoken** para realizar a autenticação de todos os utilizadores, recorrendo, depois, a esse token para obter dados da API.
 
+A cada utilizador é também associado um nível de acesso( Utilizador ou Admin), sendo que os Utilizadores podem fazer todas as funcionalidades exceto a eliminação de comentários que é exclusiva dos Admins.
 
 
 # Conclusão
