@@ -8,20 +8,19 @@ html
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
     script(src='/javascripts/teste.js')
     div.navbar
-      a(href='/') Home
+      a(href="/") Home
       a(href="/rua") Ruas
-      div.navbar-mid 
+      div.navbar-mid
         p(style="color:white;")
         form(role="search")
           input.form-control(type="search", placeholder="Search", aria-label="Search")
-      if (t == null)
+      if t === false
         div.navbar-right
           a(href="/login") Login
           a(href="/register") Register
-      if (t != null) 
+      else
         div.navbar-right
           a(href="/logout") Logout
-
       
 
     style

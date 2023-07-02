@@ -7,8 +7,6 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
 const fs = require('fs');
-const { verificaAcesso } = require('../../Auth/auth/auth');
-const { response } = require('../app');
 
 function verificaToken(req, res, next){
   console.log("oiii")
@@ -42,43 +40,67 @@ function fileExists(filePath) {
   return fs.existsSync(filePath);
 }
 
-router.get('/map', function(req, res, next) {
-  res.render('TesteAPIgoogle');
-});
-
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  token = null
-  if(req.cookies && req.cookies.token)
+router.get('/', function(req, res) {
+
+  tokenBool = false
+  if(req.cookies && req.cookies.token){
     token = req.cookies.token
-  res.render('index', {t: token});
-  token = null;
+    tokenBool = true
+
+    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
+      if(e){
+        console.log('Token is expired');
+        tokenBool= false
+      }
+    })
+  }
+
+  res.render('index', {t: tokenBool});
 });
 
 
-router.get('/rua', function(req, res, next) {
-  token = null
-  if(req.cookies && req.cookies.token)
+router.get('/rua', function(req, res) {
+
+  tokenBool = false
+  if(req.cookies && req.cookies.token){
     token = req.cookies.token
+    tokenBool = true
+
+    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
+      if(e){
+        console.log('Token is expired');
+        tokenBool= false
+      }
+    })
+  }
+
   axios.get("http://localhost:8000/ruas")
     .then(response => {
-      res.render('ruasTodas', { data: response.data, t: token});
-      token = null;
+      res.render('ruasTodas', { data: response.data, t: tokenBool});
     })
     .catch(erro => {
       res.render("error", {message: "Erro ao obter pagina inicial", error : erro})
     })
 });
 
-router.get('/rua/register', function(req,res,next) {
-  token = null
-  if(req.cookies && req.cookies.token)
+router.get('/rua/register', function(req,res) {
+  tokenBool = false
+  if(req.cookies && req.cookies.token){
     token = req.cookies.token
-  res.render('addRua', {t: token});
-  token = null;
+    tokenBool = true
+
+    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
+      if(e){
+        console.log('Token is expired');
+        tokenBool= false
+      }
+    })
+  }
+  res.render('addRua', {t: tokenBool});
 })
 
-router.post('/rua/register', upload.single('myFile'), function(req, res, next) {
+router.post('/rua/register', upload.single('myFile'), function(req, res) {
 
   console.log(req.body)
 
@@ -124,14 +146,24 @@ router.post('/rua/register', upload.single('myFile'), function(req, res, next) {
 });
 
 
-router.get('/rua/:id', function(req, res, next) {
-  token = null
-  if(req.cookies && req.cookies.token)
+router.get('/rua/:id', function(req, res) {
+  
+  tokenBool = false
+  if(req.cookies && req.cookies.token){
     token = req.cookies.token
+    tokenBool = true
+
+    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
+      if(e){
+        console.log('Token is expired');
+        tokenBool= false
+      }
+    })
+  }
+
   axios.get("http://localhost:8000/ruas/" + req.params.id)
     .then(response => {
-        res.render('infoCasas', { data: response.data, t: token});
-        token = null;
+        res.render('infoCasas', { data: response.data, t: tokenBool});
     })
     .catch(erro => {
       res.render("error", {message: "erro ao obter a pagina da rua", error : erro})
@@ -139,7 +171,7 @@ router.get('/rua/:id', function(req, res, next) {
 });
 
 // Publicar Comentário
-router.post('/rua/:id', verificaToken, function(req, res, next) {
+router.post('/rua/:id', verificaToken, function(req, res) {
   axios.post("http://localhost:8000/ruas/post/" + req.params.id, req.body)
     .then(response => {
         res.redirect("/rua/" + req.params.id);
@@ -151,22 +183,31 @@ router.post('/rua/:id', verificaToken, function(req, res, next) {
 
 
 // Registar uma casa (GET)
-router.get('/rua/:id/regCasa', verificaToken, function(req,res,next) {
-  token = null
-  if(req.cookies && req.cookies.token)
+router.get('/rua/:id/regCasa', verificaToken, function(req,res) {
+  
+  tokenBool = false
+  if(req.cookies && req.cookies.token){
     token = req.cookies.token
-  res.render('addCasa', {t:token});
-  token = null;
+    tokenBool = true
+
+    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
+      if(e){
+        console.log('Token is expired');
+        tokenBool= false
+      }
+    })
+  }
+
+  res.render('addCasa', {t:tokenBool});
 })
 
 
 // Eliminar uma casa
 router.get('/rua/:id/deleteCasa/:idC', verificaToken, function(req,res,next) {
-  token = null
-  if(req.cookies && req.cookies.token)
-    token = req.cookies.token
-  res.render('addCasaR', {idCasa: req.params.idC, idRua: req.params.id, t:token});
-  token = null;
+  
+  tokenBool=true
+
+  res.render('addCasaR', {idCasa: req.params.idC, idRua: req.params.id, t:tokenBool});
 })
 
 router.get('/rua/:id/deleteCasa/:idC/S', verificaToken, function(req,res,next) {
@@ -182,7 +223,7 @@ router.get('/rua/:id/deleteCasa/:idC/S', verificaToken, function(req,res,next) {
 
 
 // Registar uma casa (POST)
-router.post('/rua/:id/regCasa', verificaToken, function(req, res, next) {
+router.post('/rua/:id/regCasa', verificaToken, function(req, res) {
   let para = {refs: {}, texto: req.body.texto }
   delete req.body.texto
   req.body.desc = [para]
@@ -226,27 +267,67 @@ router.post('/rua/:id/updateCasa/:idC', verificaToken, function(req,res,next) {
 
 // Tratamento do Register
 router.get('/register', function(req,res) {
-  res.render('registerForm')
+
+  tokenBool = false
+  if(req.cookies && req.cookies.token){
+    token = req.cookies.token
+    tokenBool = true
+
+    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
+      if(e){
+        console.log('Token is expired');
+        tokenBool= false
+      }
+    })
+  }
+
+  res.render('registerForm', {t: tokenBool})
 })
 
 // Tratamento do Login
 router.get('/logout', function(req, res){
-  token = null
-  if(req.cookies && req.cookies.token)
+  
+  tokenBool = false
+  if(req.cookies && req.cookies.token){
     token = req.cookies.token
-  res.render('testeLogout', {t:token})
-  token = null;
+    tokenBool = true
+
+    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
+      if(e){
+        console.log('Token is expired');
+        tokenBool= false
+      }
+    })
+  }
+
+  res.render('testeLogout', {t:tokenBool})
 })
 
 // Tratamento do Login
 router.get('/login', function(req, res){
-  res.render('loginForm')
+
+  tokenBool = false
+  if(req.cookies && req.cookies.token){
+    token = req.cookies.token
+    tokenBool = true
+
+    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
+      if(e){
+        console.log('Token is expired');
+        tokenBool= false
+      }
+    })
+  }
+
+  res.render('loginForm', {t: tokenBool})
 })
 
 router.post('/register',verificaToken, function(req, res){
-  token = null
-  if(req.cookies && req.cookies.token)
+  
+  if(req.cookies && req.cookies.token){
     token = req.cookies.token
+  }
+
   axios.post('http://localhost:8003/users/register?token='+token, req.body)
     .then(response => {
       res.cookie('token', response.data.token)
@@ -258,6 +339,8 @@ router.post('/register',verificaToken, function(req, res){
 })
 
 router.post('/login', function(req, res){
+
+
   axios.post('http://localhost:8003/users/login', req.body)
     .then(response => {
       res.cookie('token', response.data.token)
