@@ -9,7 +9,6 @@ const upload = multer({ dest: 'uploads/' });
 const fs = require('fs');
 
 function verificaToken(req, res, next){
-  console.log("oiii")
   var myToken 
   if(req.query && req.query.token)
       myToken = req.query.token;
@@ -67,6 +66,7 @@ router.get('/rua', function(req, res) {
     token = req.cookies.token
     tokenBool = true
 
+
     jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
       if(e){
         console.log('Token is expired');
@@ -75,7 +75,18 @@ router.get('/rua', function(req, res) {
     })
   }
 
-  axios.get("http://localhost:8000/ruas")
+  let q = ""
+    
+  if (req.query && "field" in req.query && "text" in req.query)
+  {
+    if (req.query.field == "nome")
+      q = `?nome_like=.*(?i)${req.query.text}.*`
+    else
+      q = `/${req.query.field}/${req.query.text}`
+  }
+ 
+
+  axios.get("http://localhost:8000/ruas" + q)
     .then(response => {
       res.render('ruasTodas', { data: response.data, t: tokenBool});
     })

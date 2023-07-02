@@ -9,8 +9,14 @@ function parseQuery(query)
         let value = query[key];
         if (key.includes("_like"))
         {
+            let modifiers = "";
+            if (value.includes("(?i)"))
+            {
+                value = value.replace("(?i)", "");
+                modifiers = "i"
+            }
             key = key.replace("_like", "");
-            value =  new RegExp(`${value}`); 
+            value =  new RegExp(`${value}`, modifiers); 
         }
         r[key] = value;
     }
@@ -58,7 +64,7 @@ module.exports.getRuaNome = (nome) => {
 module.exports.listaRuasData = (data) => {
     let regex = new RegExp(`${data}`, 'gi')
     return Rua
-    .find({$or: [ { "casas.desc.refs.datas": regex}, {"paragrafos.refs.datas": regex} ]})
+    .find({$or: [ { "casas.desc.refs.datas": regex}, {"paragrafo.refs.datas": regex} ]})
     .setOptions({ sanitizeFilter: true })
     .sort({numero:1})
     .then(lista => {
@@ -72,7 +78,7 @@ module.exports.listaRuasData = (data) => {
 module.exports.listaRuasLugar = (lugar) => {
     let regex = new RegExp(`${lugar}`, 'gi')
     return Rua
-    .find({$or: [ { "casas.desc.refs.lugares.nome": regex}, {"paragrafos.refs.lugares.nome": regex} ]})
+    .find({$or: [ { "casas.desc.refs.lugares.nome": regex}, {"paragrafo.refs.lugares.nome": regex} ]})
     .setOptions({ sanitizeFilter: true })
     .sort({numero:1})
     .then(lista => {

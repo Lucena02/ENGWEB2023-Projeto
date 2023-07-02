@@ -7,15 +7,15 @@ block content
 	.content
 		p(style="color:white;")
 		form(role="search")
-			input.form-control(type="search", placeholder="Search", aria-label="Search" style="position:relative; width:300px; left:73px;")
+			input.form-control(type="search", placeholder="Search", aria-label="Search" name="text" style="position:relative; width:300px; left:73px;")
+			div(style="position:relative; width:300px; left:73px;")
+				input.w3-check(type="radio" name="field" value="nome" checked)
+				label Nome
+				input.w3-check(type="radio" name="field" value="lugar" style="position:relative; left:10px;")
+				label(style="position:relative; left:10px;") Lugar
+				input.w3-check(type="radio" name="field" value="data" style="position:relative; left:20px;")
+				label(style="position:relative; left:20px;") Data
 		br
-		div(style="position:relative; width:300px; left:73px;")
-			input.w3-check(type="radio" name="nome" checked)
-			label Nome
-			input.w3-check(type="radio" name="local" style="position:relative; left:10px;")
-			label(style="position:relative; left:10px;") Local
-			input.w3-check(type="radio" name="data" style="position:relative; left:20px;")
-			label(style="position:relative; left:20px;") Data
 		div.deslocaDir
 			a(href="http://localhost:8001/rua/register") 
 				button.w3-button.w3-white.w3-border Adicionar Nova Rua
