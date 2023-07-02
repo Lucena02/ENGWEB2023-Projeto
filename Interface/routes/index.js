@@ -41,21 +41,26 @@ function fileExists(filePath) {
 
 /* GET home page. */
 router.get('/', function(req, res) {
-
+  levelUser = "Utilizador"
   tokenBool = false
+
+
   if(req.cookies && req.cookies.token){
     token = req.cookies.token
     tokenBool = true
 
-    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
-      if(e){
-        console.log('Token is expired');
-        tokenBool= false
-      }
-    })
+    try {
+      const tk = jwt.verify(token, 'EngWeb2023RuasDeBraga');
+      console.log(tk.level);
+      levelUser = tk.level;
+      // Perform additional actions or logic here
+    } catch (e) {
+      // Handle the error
+      console.error(e);
+    }
   }
-
-  res.render('index', {t: tokenBool});
+  
+  res.render('index', {t: tokenBool, level: levelUser});
 });
 
 
