@@ -1,6 +1,12 @@
 # Relatorio
 
 
+# Introdução
+
+Para a cadeira de Engenharia Web foi-nos proposto a realização de um trabalho prático. Para este trabalho foram-nos dados exatamente 4 temas, sendo que o escolhido foi o "Ruas de Braga". Assim, ficamos responsabilizados por desenvolver
+um sistema capaz de armazenar, consultar e adicionar/remover/editar recursos relativos às ruas e casas de braga. Para além disso teriamos de fazer uma diferenciação entre utilizadores, cada um com permissões diferentes.
+
+
 
 
 ## API de Dados
@@ -97,3 +103,34 @@ var ruaSchema = new mongoose.Schema({
 ```
 
 No que toca à API, permitimos que o utilizador obtenha a lista de ruas, podendo fazer querys para qualquer campo, e usando o sufixo _like para fazer uma procura por expressão regular. Pode obter a lista de nomes de ruas, obter uma rua pelo seu id, obter uma rua pelo seu nome, uma lista de ruas filtradas por data (se contém essa data ou não nas referências), obter uma lista de ruas filtrada por lugar (se contém esse lugarou não nas referências), obter uma casa pelo seu id, adicionar uma rua, adicionar uma casa a uma rua (identificada pelo seu id), modificar uma rua e apagar uma rua.
+
+
+## Funcionalidades da plataforma 
+
+Agora iremos explorar todas as funcionalidades implementadas no nosso trabalho.
+
+### Inserção de novas ruas e casas
+
+Todos os utilizadores são capazes de adicionar novos registos para a lista de casas ou de ruas, adicionando informações básicas sobre as mesmas. Quando se adicionam ruas. É possível mais tarde entrar na página da rua para editar os restantes parâmetros (casas, posts, entre outros)
+
+### Utilização da Google API
+
+Achamos que seria uma boa ideia implementar a API da Google de forma a facilitar a visualização das ruas no Google Maps.
+
+### Upload de Imagens
+
+Para além da implementação da API da Google, todos os utilizadores podem adicionar imagens à rua.
+
+### Search Bar
+
+
+
+## Autenticação
+
+
+
+
+# Conclusão
+
+Chegando ao fim do nosso trabalho prático achamos que conseguimos aplicar os conhecimentos que ganhamos ao longo do decorrer do ano nesta Unidade Curricular.
+Achamos que conseguimos alcançar todos os objetivos estabelecidos por nós, com exceção da implementação do docker que deveríamos ter reservado algum tempo para o setup do mesmo.
