@@ -73,8 +73,6 @@ router.post('/login', passport.authenticate('local'), function(req, res){
   User.getLevel(req.user.username)
     .then(response =>{
 
-      console.log(response.level)
-
       jwt.sign({ username: req.user.username, level: response.level,
         sub: 'Ruas de Braga ENGWEB2023'}, 
         "EngWeb2023RuasDeBraga",

@@ -49,17 +49,15 @@ router.get('/', function(req, res) {
     token = req.cookies.token
     tokenBool = true
 
-    try {
-      const tk = jwt.verify(token, 'EngWeb2023RuasDeBraga');
-      console.log(tk.level);
-      levelUser = tk.level;
-      // Perform additional actions or logic here
-    } catch (e) {
-      // Handle the error
-      console.error(e);
-    }
+    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
+      if(e){
+        console.log('Token is expired');
+        tokenBool= false
+      }
+    })
+
   }
-  
+
   res.render('index', {t: tokenBool, level: levelUser});
 });
 
@@ -170,17 +168,20 @@ router.get('/rua/:id', function(req, res) {
     token = req.cookies.token
     tokenBool = true
 
-    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
-      if(e){
-        console.log('Token is expired');
-        tokenBool= false
-      }
-    })
+    try {
+      const tk = jwt.verify(token, 'EngWeb2023RuasDeBraga');
+      levelUser = tk.level;
+      // Perform additional actions or logic here
+    } catch (e) {
+      tokenBool=false
+    }
   }
 
+  console.log(req.body)
+  
   axios.get("http://localhost:8000/ruas/" + req.params.id)
     .then(response => {
-        res.render('infoCasas', { data: response.data, t: tokenBool});
+        res.render('infoCasas', { data: response.data, t: tokenBool, level: levelUser});
     })
     .catch(erro => {
       res.render("error", {message: "erro ao obter a pagina da rua", error : erro})
@@ -190,7 +191,26 @@ router.get('/rua/:id', function(req, res) {
 // Publicar Comentário
 router.post('/rua/:id', verificaToken, function(req, res) {
   req.body.data = Date()
-  req.body.autor = "f"
+  levelUser = "Utilizador"
+  tokenBool = false
+
+  if(req.cookies && req.cookies.token){
+    token = req.cookies.token
+    tokenBool = true
+    username= ""
+    try {
+      const tk = jwt.verify(token, 'EngWeb2023RuasDeBraga');
+      username = tk.username;
+      // Perform additional actions or logic here
+    } catch (e) {
+      tokenBool=false
+    }
+
+
+  }
+
+  req.body.autor = username
+  console.log("oi")
   console.log(req.body)
   axios.post("http://localhost:8000/ruas/post/" + req.params.id, req.body)
     .then(response => {

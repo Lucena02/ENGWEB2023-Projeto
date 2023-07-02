@@ -143,9 +143,11 @@ html
 								h6.text-muted.time #{i.data}
 						.post-description
 							p #{i.texto}
-						div.btn-group
-							button.btn.btn-sm.btn-outline-secondary(type="button")
-								a(href="/rua/" + data._id + "/deleteCasa/" + i._id) Eliminar
+						
+						if(level === "Admin")
+							div.btn-group
+								button.btn.btn-sm.btn-outline-secondary(type="button")
+									a(href="/rua/" + data._id + "/deleteCasa/" + i._id) Eliminar
 
 						
 
