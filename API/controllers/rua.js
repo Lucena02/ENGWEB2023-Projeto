@@ -103,7 +103,6 @@ module.exports.getCasa = (idCasa) => {
 
 // Adicionar um rua
 module.exports.addRua = (rua) => {
-    console.log(rua);
     return Rua
     .create(rua)
     .then(resposta => {
@@ -176,10 +175,11 @@ module.exports.updateCasa = (idCasa, casa) => {
 };
 
 
-module.exports.deleteCasa = (idCasa, idRua) => {
+module.exports.deleteCasa = (idCasa) => {
+    console.log(idCasa)
     return Rua
     .updateOne(
-        { _id : idRua},
+        { "casas._id": idCasa},
         { $pull: { casas: { _id: idCasa } } }
       )
     .then(resposta => {

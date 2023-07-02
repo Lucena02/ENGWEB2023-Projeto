@@ -167,7 +167,7 @@ def parseXML(xmlFile):
 
     objeto["figuras"] = parseFiguras(corpo)
     objeto["figuras"].extend(figurasAtuais(objeto["numero"], objeto["nome"]))
-    objeto["paragrafos"] = parseParagrafos(corpo)
+    objeto["paragrafo"] = parseParagrafos(corpo)
     objeto["casas"] = parseCasas(corpo.findall("./lista-casas"))
 
     return objeto
