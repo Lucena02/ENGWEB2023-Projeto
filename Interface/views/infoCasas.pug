@@ -86,8 +86,9 @@ html
 						button.w3-button.w3-white.w3-border Adicionar Nova Imagem
 				br
 				br
-				for i in data.figuras 
-					img(src=i.imagem.path, alt='foto', style='max-width: 32%')
+				.galeria
+					for i in data.figuras 
+						img(src=i.imagem.path, alt='foto', style='max-width: 32%')
 			
 			if (data.pos.latitude!=0 || data.pos.longitude!=0)
 				#mapcoords(data-lat=data.pos.latitude data-lng=data.pos.longitude)

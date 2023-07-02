@@ -308,3 +308,9 @@ body {
 	background-color: grey;
 	border-color: #333;
 }
+
+.galeria img {
+    margin: 10;
+    border-style: solid;
+    border-width:2px;
+}
