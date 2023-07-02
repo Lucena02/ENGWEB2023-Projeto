@@ -209,3 +209,17 @@ module.exports.addComentario = (idRua, comentario) => {
         return erro;
     });
 };
+
+module.exports.removeComentario = (idComment) => {
+    return Rua
+    .updateOne(
+        { "comentarios._id": idComment},
+        { $pull: { comentarios: { _id: idComment } } }
+      )
+    .then(resposta => {
+        return resposta;
+    })
+    .catch(erro => {
+        return erro;
+    });
+};
