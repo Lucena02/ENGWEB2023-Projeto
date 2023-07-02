@@ -63,19 +63,18 @@ router.get('/', function(req, res) {
 
 
 router.get('/rua', function(req, res) {
-
+  levelUser= "Utilizador"
   tokenBool = false
   if(req.cookies && req.cookies.token){
     token = req.cookies.token
     tokenBool = true
 
-
-    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
-      if(e){
-        console.log('Token is expired');
-        tokenBool= false
-      }
-    })
+    try {
+      const tk = jwt.verify(token, 'EngWeb2023RuasDeBraga');
+      levelUser = tk.level;
+    } catch (e) {
+      tokenBool=false
+    }
   }
 
   let q = ""
@@ -91,7 +90,7 @@ router.get('/rua', function(req, res) {
 
   axios.get("http://localhost:8000/ruas" + q)
     .then(response => {
-      res.render('ruasTodas', { data: response.data, t: tokenBool});
+      res.render('ruasTodas', { data: response.data, t: tokenBool, level: levelUser});
     })
     .catch(erro => {
       res.render("error", {message: "Erro ao obter pagina inicial", error : erro})
@@ -113,6 +112,22 @@ router.get('/rua/register', function(req,res) {
   }
   res.render('addRua', {t: tokenBool});
 })
+
+
+router.get('/rua/ultraremove/:id', verificaToken, function(req,res,next) {
+  axios.delete("http://localhost:8000/ruas/" + req.params.id)
+    .then(response => {
+        res.redirect("/rua");
+    })
+    .catch(erro => {
+      res.render("error", {message: "erro ao eliminar uma rua", error : erro})
+    })
+});
+
+
+
+
+
 
 router.post('/rua/register', upload.single('myFile'), function(req, res) {
 
@@ -162,7 +177,7 @@ router.post('/rua/register', upload.single('myFile'), function(req, res) {
 
 
 router.get('/rua/:id', function(req, res) {
-  
+  levelUser="Utilizador"
   tokenBool = false
   if(req.cookies && req.cookies.token){
     token = req.cookies.token
