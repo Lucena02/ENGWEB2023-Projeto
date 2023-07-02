@@ -18,7 +18,9 @@ html
 					a(href="/register") Register
 			if (t != null) 
 				div.navbar-right
+					a(href="/register") Register
 					a(href="/logout") Logout
+
 
 	style
 		|	body{
@@ -88,7 +90,7 @@ html
 				br
 				.galeria
 					for i in data.figuras 
-						img(src=i.imagem.path, alt='foto', style='max-width: 32%')
+						img(src=i.imagem.path, alt='foto', style='max-width: 48%')
 			
 			if (data.pos.latitude!=0 || data.pos.longitude!=0)
 				#mapcoords(data-lat=data.pos.latitude data-lng=data.pos.longitude)
@@ -147,7 +149,7 @@ html
 						if(level === "Admin")
 							div.btn-group
 								button.btn.btn-sm.btn-outline-secondary(type="button")
-									a(href="/rua/" + data._id + "/deleteCasa/" + i._id) Eliminar
+									a(href="/rua/" + data._id + "/unpost/" + i._id) Eliminar
 
 						
 

@@ -63,19 +63,18 @@ router.get('/', function(req, res) {
 
 
 router.get('/rua', function(req, res) {
-
+  levelUser= "Utilizador"
   tokenBool = false
   if(req.cookies && req.cookies.token){
     token = req.cookies.token
     tokenBool = true
 
-
-    jwt.verify(token, 'EngWeb2023RuasDeBraga',(e, payload)=>{
-      if(e){
-        console.log('Token is expired');
-        tokenBool= false
-      }
-    })
+    try {
+      const tk = jwt.verify(token, 'EngWeb2023RuasDeBraga');
+      levelUser = tk.level;
+    } catch (e) {
+      tokenBool=false
+    }
   }
 
   let q = ""
@@ -91,7 +90,7 @@ router.get('/rua', function(req, res) {
 
   axios.get("http://localhost:8000/ruas" + q)
     .then(response => {
-      res.render('ruasTodas', { data: response.data, t: tokenBool});
+      res.render('ruasTodas', { data: response.data, t: tokenBool, level: levelUser});
     })
     .catch(erro => {
       res.render("error", {message: "Erro ao obter pagina inicial", error : erro})
@@ -113,6 +112,22 @@ router.get('/rua/register', function(req,res) {
   }
   res.render('addRua', {t: tokenBool});
 })
+
+
+router.get('/rua/ultraremove/:id', verificaToken, function(req,res,next) {
+  axios.delete("http://localhost:8000/ruas/" + req.params.id)
+    .then(response => {
+        res.redirect("/rua");
+    })
+    .catch(erro => {
+      res.render("error", {message: "erro ao eliminar uma rua", error : erro})
+    })
+});
+
+
+
+
+
 
 router.post('/rua/register', upload.single('myFile'), function(req, res) {
 
@@ -162,7 +177,7 @@ router.post('/rua/register', upload.single('myFile'), function(req, res) {
 
 
 router.get('/rua/:id', function(req, res) {
-  
+  levelUser="Utilizador"
   tokenBool = false
   if(req.cookies && req.cookies.token){
     token = req.cookies.token
@@ -190,7 +205,7 @@ router.get('/rua/:id', function(req, res) {
 
 // Publicar Comentário
 router.post('/rua/:id', verificaToken, function(req, res) {
-  req.body.data = Date()
+  req.body.data = Date().substring(0,24);
   levelUser = "Utilizador"
   tokenBool = false
 
@@ -205,8 +220,6 @@ router.post('/rua/:id', verificaToken, function(req, res) {
     } catch (e) {
       tokenBool=false
     }
-
-
   }
 
   req.body.autor = username
@@ -220,6 +233,19 @@ router.post('/rua/:id', verificaToken, function(req, res) {
       res.render("error", {message: "erro ao publicar comentário na rua", error : erro})
     })
 });
+
+
+router.get('/rua/:idR/unpost/:id', verificaToken, function(req,res,next) {
+  axios.delete("http://localhost:8000/ruas/unpost/" + req.params.id)
+    .then(response => {
+        res.redirect("/rua/" + req.params.idR);
+    })
+    .catch(erro => {
+      res.render("error", {message: "erro ao eliminar uma casa da respetiva rua", error : erro})
+    })
+});
+
+
 
 
 // Registar uma casa (GET)
@@ -244,9 +270,7 @@ router.get('/rua/:id/regCasa', verificaToken, function(req,res) {
 
 // Eliminar uma casa
 router.get('/rua/:id/deleteCasa/:idC', verificaToken, function(req,res,next) {
-  
   tokenBool=true
-
   res.render('addCasaR', {idCasa: req.params.idC, idRua: req.params.id, t:tokenBool});
 })
 
