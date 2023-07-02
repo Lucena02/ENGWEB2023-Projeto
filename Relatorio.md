@@ -123,7 +123,7 @@ De forma a utilizar o máximo possível o dataset fornecido, decidimos permitir 
 
 ### Search Bar
 
-
+Como tinha sido pedido no enunciado do trabalho que devíamos permitir uma procura por Datas presentes numa rua, Lugares presentes numa rua e Nome da Rua, decidimos adicionar uma barra de procura, que permite exatamente isso. Primeiro escolhemos qual o tipo de procura a fazer e em seguida escrevemos o texto que queremos filtrar e clicamos na tecla enter.
 
 ## Autenticação
 
