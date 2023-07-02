@@ -103,8 +103,8 @@ router.post('/ruas/editCasa/:id', function(req, res, next) {
     });
 });
 
-router.delete('/ruas/deleteCasa/:id', function(req, res, next) {
-    Rua.deleteCasa(req.params.id)
+router.delete('/ruas/deleteCasa/:idC/:id', function(req, res, next) {
+    Rua.deleteCasa(req.params.idC, req.params.id)
     .then(resposta => {
         res.status(200).jsonp(resposta);
     })

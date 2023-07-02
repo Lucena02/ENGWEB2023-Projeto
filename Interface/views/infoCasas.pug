@@ -12,14 +12,6 @@ html
 		div.navbar
 			a(href='/') Home
 			a(href="/rua") Ruas
-			.dropdown
-				button(onclick="um()").dropbtn Dropdown
-					i.fa.fa-caret-down
-				div#myDropdown.dropdown-content
-					div.column
-						a(href="#") Link 1
-						a(href="#") Link 2
-						a(href="#") Link 3
 			div.navbar-mid 
 				p(style="color:white;")
 				form(role="search")
@@ -28,7 +20,6 @@ html
 				div.navbar-right
 					a(href="/login") Login
 					a(href="/register") Register
-					a(href="/logout") Logout
 			if (t != null) 
 				div.navbar-right
 					a(href="/logout") Logout

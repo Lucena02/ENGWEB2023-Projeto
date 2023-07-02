@@ -22,7 +22,7 @@ module.exports.listaRuas = (query) => {
     return Rua
     .find(parseQuery(query))
     .setOptions({ sanitizeFilter: true })
-    .sort({_id:1})
+    .sort({numero:1})
     .then(lista => {
         return lista;
     })
@@ -60,7 +60,7 @@ module.exports.listaRuasData = (data) => {
     return Rua
     .find({$or: [ { "casas.desc.refs.datas": regex}, {"paragrafos.refs.datas": regex} ]})
     .setOptions({ sanitizeFilter: true })
-    .sort({_id:1})
+    .sort({numero:1})
     .then(lista => {
         return lista;
     })
@@ -74,7 +74,7 @@ module.exports.listaRuasLugar = (lugar) => {
     return Rua
     .find({$or: [ { "casas.desc.refs.lugares.nome": regex}, {"paragrafos.refs.lugares.nome": regex} ]})
     .setOptions({ sanitizeFilter: true })
-    .sort({_id:1})
+    .sort({numero:1})
     .then(lista => {
         return lista;
     })
@@ -103,6 +103,7 @@ module.exports.getCasa = (idCasa) => {
 
 // Adicionar um rua
 module.exports.addRua = (rua) => {
+    console.log(rua);
     return Rua
     .create(rua)
     .then(resposta => {
@@ -175,12 +176,11 @@ module.exports.updateCasa = (idCasa, casa) => {
 };
 
 
-module.exports.deleteCasa = (idCasa) => {
+module.exports.deleteCasa = (idCasa, idRua) => {
     return Rua
-    .update(
-        {},
-        { $pull: { casas: { _id: idCasa } } },
-        { multi: true }
+    .updateOne(
+        { _id : idRua},
+        { $pull: { casas: { _id: idCasa } } }
       )
     .then(resposta => {
         return resposta;

@@ -100,16 +100,23 @@ def parseRefs(nodo):
 
 
 def parseParagrafos(nodo):
-    paragrafos = []
+    t = ""
+    e = []
+    l = []
+    d = []
     for para in nodo.findall("./para"):
-        refs, t = parseRefs(para)
-        texto = str(para.text) + t
+        refs, t2 = parseRefs(para)
+        texto = str(para.text) + t2
         texto = re.sub(r"\s*\n\s*", "", texto)
+        t = t + "\n" + texto
+        e.extend(refs["entidades"])
+        l.extend(refs["lugares"])
+        d.extend(refs["datas"])
 
-        paragrafos.append({"refs": refs, "texto": texto})
+    return {"refs": {"entidades": e, "lugares": l, "datas": d},
+            "texto": t}
 
-    return paragrafos
-
+# MUDAR AQUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 def parseDesc(casa):
     paragrafos = []
@@ -145,14 +152,14 @@ def parseXML(xmlFile):
     rua = tree.getroot()
 
     meta = rua.find("./meta")
-    objeto["_id"] = int(re.sub(r"\s*\n\s*", "", meta.find("./número").text))
+    objeto["numero"] = int(re.sub(r"\s*\n\s*", "", meta.find("./número").text))
     objeto["nome"] = re.sub(r"\s*\n\s*", "", meta.find("./nome").text)
     objeto["pos"] = {"latitude": 0, "longitude":  0}
 
     corpo = rua.find("./corpo")
 
     objeto["figuras"] = parseFiguras(corpo)
-    objeto["figuras"].extend(figurasAtuais(objeto["_id"], objeto["nome"]))
+    objeto["figuras"].extend(figurasAtuais(objeto["numero"], objeto["nome"]))
     objeto["paragrafos"] = parseParagrafos(corpo)
     objeto["casas"] = parseCasas(corpo.findall("./lista-casas"))
 

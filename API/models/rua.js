@@ -45,7 +45,7 @@ var casaSchema = new mongoose.Schema({
     numero: String,
     enfiteutas: [String],
     foro: String,
-    desc: [paraSchema],
+    desc: paraSchema,
     vista: String
 });
 
@@ -56,11 +56,11 @@ var comentarioSchema = new mongoose.Schema({
 });
 
 var ruaSchema = new mongoose.Schema({
-    _id: Number,
+    numero: Number,
     nome: String,
     pos: posSchema, 
     figuras: [figuraSchema],
-    paragrafos: [paraSchema],
+    paragrafo: paraSchema,
     casas: [casaSchema],
     comentarios: [comentarioSchema]
 });

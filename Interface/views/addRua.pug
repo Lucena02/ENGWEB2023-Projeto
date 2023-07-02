@@ -7,11 +7,20 @@ block content
 			h2 Adicionar Rua
         
 		form(method="POST")
+			label Numero da Casa
+			input.w3-input.w3-round(type="number" name="numero")
+			br
 			label Nome
-			input.w3-input.w3-round(type="text" name="rua")
+			input.w3-input.w3-round(type="text" name="nome")
 			br
 			label Descrição 
 			input.w3-input.w3-round(type="text" name="texto")
+			br
+			label Latitude 
+			input.w3-input.w3-round(type="number" name="latitude" value="0")
+			br
+			label Longitude
+			input.w3-input.w3-round(type="number" name="longitude" value="0")
 			
 
 			button.w3-btn.w3-mb-2(type="submit") Adicionar

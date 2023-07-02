@@ -45,18 +45,22 @@ router.get('/map', function(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  token = null
   if(req.cookies && req.cookies.token)
     token = req.cookies.token
   res.render('index', {t: token});
+  token = null;
 });
 
 
 router.get('/rua', function(req, res, next) {
+  token = null
   if(req.cookies && req.cookies.token)
     token = req.cookies.token
   axios.get("http://localhost:8000/ruas")
     .then(response => {
       res.render('ruasTodas', { data: response.data, t: token});
+      token = null;
     })
     .catch(erro => {
       res.render("error", {message: "Erro ao obter pagina inicial", error : erro})
@@ -64,17 +68,39 @@ router.get('/rua', function(req, res, next) {
 });
 
 router.get('/rua/register', function(req,res,next) {
+  token = null
   if(req.cookies && req.cookies.token)
     token = req.cookies.token
   res.render('addRua', {t: token});
+  token = null;
 })
 
+router.post('/rua/register', function(req, res, next) {
+  let para = {refs: {}, texto: req.body.texto }
+  delete req.body.texto
+  req.body.paragrafos = [para]
+  let pos = {latitude: req.body.latitude, longitude: req.body.longitude}
+  delete req.body.latitude
+  delete req.body.longitude
+  req.body.pos = pos
+  axios.post("http://localhost:8000/ruas", req.body)
+    .then(response => {
+        res.redirect('/rua');
+    })
+    .catch(erro => {
+      res.render("error", {message: "erro ao adicionar uma rua", error : erro})
+    })
+});
+
+
 router.get('/rua/:id', function(req, res, next) {
+  token = null
   if(req.cookies && req.cookies.token)
     token = req.cookies.token
   axios.get("http://localhost:8000/ruas/" + req.params.id)
     .then(response => {
         res.render('infoCasas', { data: response.data, t: token});
+        token = null;
     })
     .catch(erro => {
       res.render("error", {message: "erro ao obter a pagina da rua", error : erro})
@@ -95,21 +121,25 @@ router.post('/rua/:id', verificaToken, function(req, res, next) {
 
 // Registar uma casa (GET)
 router.get('/rua/:id/regCasa', verificaToken, function(req,res,next) {
+  token = null
   if(req.cookies && req.cookies.token)
     token = req.cookies.token
   res.render('addCasa', {t:token});
+  token = null;
 })
 
 
 // Eliminar uma casa
 router.get('/rua/:id/deleteCasa/:idC', verificaToken, function(req,res,next) {
+  token = null
   if(req.cookies && req.cookies.token)
     token = req.cookies.token
   res.render('addCasaR', {idCasa: req.params.idC, idRua: req.params.id, t:token});
+  token = null;
 })
 
 router.get('/rua/:id/deleteCasa/:idC/S', verificaToken, function(req,res,next) {
-  axios.get("http://localhost:8000/ruas/deleteCasa/" + req.params.idC)
+  axios.delete("http://localhost:8000/ruas/deleteCasa/" + req.params.idC + "/" + req.params.id)
     .then(response => {
         res.render("/rua/" + req.params.id);
     })
@@ -122,6 +152,9 @@ router.get('/rua/:id/deleteCasa/:idC/S', verificaToken, function(req,res,next) {
 
 // Registar uma casa (POST)
 router.post('/rua/:id/regCasa', verificaToken, function(req, res, next) {
+  let para = {refs: {}, texto: req.body.texto }
+  delete req.body.texto
+  req.body.desc = [para]
   axios.post("http://localhost:8000/ruas/addCasa/" + req.params.id, req.body)
     .then(response => {
         res.render('addCasaC');
@@ -167,7 +200,11 @@ router.get('/register', function(req,res) {
 
 // Tratamento do Login
 router.get('/logout', function(req, res){
-  res.render('testeLogout')
+  token = null
+  if(req.cookies && req.cookies.token)
+    token = req.cookies.token
+  res.render('testeLogout', {t:token})
+  token = null;
 })
 
 // Tratamento do Login
@@ -176,6 +213,7 @@ router.get('/login', function(req, res){
 })
 
 router.post('/register',verificaToken, function(req, res){
+  token = null
   if(req.cookies && req.cookies.token)
     token = req.cookies.token
   axios.post('http://localhost:8003/users/register?token='+token, req.body)
