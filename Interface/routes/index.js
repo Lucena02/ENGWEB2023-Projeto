@@ -77,7 +77,7 @@ router.get('/rua', function(req, res) {
 
   let q = ""
     
-  if (req.query && "field" in req.query && "text" in req.query)
+  if (req.query && "field" in req.query && "text" in req.query && req.query.text.trim().length > 0)
   {
     if (req.query.field == "nome")
       q = `?nome_like=.*(?i)${req.query.text}.*`
