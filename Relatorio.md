@@ -81,7 +81,7 @@ var casaSchema = new mongoose.Schema({
     numero: String,
     enfiteutas: [String],
     foro: String,
-    desc: [paraSchema],
+    desc: paraSchema,
     vista: String
 });
 
@@ -96,7 +96,7 @@ var ruaSchema = new mongoose.Schema({
     nome: String,
     pos: posSchema, 
     figuras: [figuraSchema],
-    paragrafos: [paraSchema],
+    paragrafo: paraSchema,
     casas: [casaSchema],
     comentarios: [comentarioSchema]
 });

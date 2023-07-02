@@ -20,7 +20,7 @@ def figurasAtuais(idRua, nome):
                         "largura": None
                         },
                     "legenda": f"{nome} - Vista Atual nº {numFiguras}"
-                   }
+                }
             figuras.append(img)
     return figuras
 
@@ -100,29 +100,36 @@ def parseRefs(nodo):
 
 
 def parseParagrafos(nodo):
-    t = ""
-    e = []
-    l = []
-    d = []
+    texto = ""
+    refs = {"entidades": [], "lugares": [], "datas": []}
     for para in nodo.findall("./para"):
-        refs, t2 = parseRefs(para)
-        texto = str(para.text) + t2
-        texto = re.sub(r"\s*\n\s*", "", texto)
-        t = t + "\n" + texto
-        e.extend(refs["entidades"])
-        l.extend(refs["lugares"])
-        d.extend(refs["datas"])
+        r, t = parseRefs(para)
+        t = str(para.text) + t
+        t = re.sub(r"\s*\n\s*", "", t)
+        texto = texto + t + "\n"
+        for key in r.keys():
+            refs[key].extend(r[key])
 
-    return {"refs": {"entidades": e, "lugares": l, "datas": d},
-            "texto": t}
+    return {"refs": refs,
+            "texto": texto}
 
-# MUDAR AQUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 def parseDesc(casa):
-    paragrafos = []
-    for desc in casa.findall("./desc"):
-        paragrafos.extend(parseParagrafos(desc))
-    return paragrafos
+    desc = {"refs": {
+                "entidades": [],
+                "lugares": [],
+                "datas": []
+        },
+        "texto": ""
+    }
+    for descNode in casa.findall("./desc"):
+        par = parseParagrafos(descNode)
+        desc["texto"] += par["texto"] + "\n"
+        refs = par["refs"]
+        for key in refs.keys():
+            desc["refs"][key].extend(refs[key])
+    desc["texto"] = (len(desc["texto"])>0 and desc["texto"][0:-1]) or ""
+    return desc
 
 
 def parseCasa(c):
@@ -160,7 +167,7 @@ def parseXML(xmlFile):
 
     objeto["figuras"] = parseFiguras(corpo)
     objeto["figuras"].extend(figurasAtuais(objeto["numero"], objeto["nome"]))
-    objeto["paragrafos"] = parseParagrafos(corpo)
+    objeto["paragrafo"] = parseParagrafos(corpo)
     objeto["casas"] = parseCasas(corpo.findall("./lista-casas"))
 
     return objeto

@@ -6,7 +6,7 @@ block content
 		header.w3-container
 			h2 Adicionar Rua
         
-		form(method="POST")
+		form(action="/rua/register" method="POST" enctype="multipart/form-data")
 			label Numero da Casa
 			input.w3-input.w3-round(type="number" name="numero")
 			br
@@ -21,6 +21,11 @@ block content
 			br
 			label Longitude
 			input.w3-input.w3-round(type="number" name="longitude" value="0")
-			
+			br
+			label Select a Image 
+			input.w3-input.w3-round(type="file" name="myFile")
+			br
+			label Legenda 
+			input.w3-input.w3-round(type="text" name="legenda")
 
 			button.w3-btn.w3-mb-2(type="submit") Adicionar

@@ -26,9 +26,8 @@ block content
 									text(x="50%", y="50%", fill="#eceeef", dy=".3em") 
 							.card-body
 								p.card-text 
-									if (i.paragrafos.length > 0)
 										- var c = 0
-										for char in i.paragrafos[0].texto
+										for char in i.paragrafo.texto
 											if c == 13
 												- break 
 											if char == ' '
