@@ -108,15 +108,15 @@ router.post('/ruas/editCasa/:id', function(req, res, next) {
     });
 });
 
-router.delete('/ruas/deleteCasa/:idC/:id', function(req, res, next) {
-    Rua.deleteCasa(req.params.idC, req.params.id)
+router.post("/ruas/post/:id", function(req,res,next) {
+    Rua.addComentario(req.params.id, req.body)
     .then(resposta => {
         res.status(200).jsonp(resposta);
     })
     .catch(erro => {
-        res.status(507).jsonp(erro);
-    });
-});
+        res.status(509).jsonp(erro);
+    })
+})
 
 router.put('/ruas', function(req, res, next) {
     Rua.updateRua(req.body._id, req.body)
@@ -138,6 +138,17 @@ router.put('/ruas/:id', function(req, res, next) {
     });
 });
 
+router.delete('/ruas/deleteCasa/:idC', function(req, res, next) {
+    console.log("aqui")
+    Rua.deleteCasa(req.params.idC)
+    .then(resposta => {
+        res.status(200).jsonp(resposta);
+    })
+    .catch(erro => {
+        res.status(507).jsonp(erro);
+    });
+});
+
 router.delete('/ruas/:id', function(req, res, next) {
     Rua.deleteRua(req.params.id)
     .then(resposta => {
@@ -148,14 +159,5 @@ router.delete('/ruas/:id', function(req, res, next) {
     });
 });
 
-router.post("/ruas/post/:id", function(req,res,next) {
-    Rua.addComentario(req.params.id, req.body)
-    .then(resposta => {
-        res.status(200).jsonp(resposta);
-    })
-    .catch(erro => {
-        res.status(509).jsonp(erro);
-    })
-})
 
 module.exports = router;

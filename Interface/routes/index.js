@@ -170,7 +170,7 @@ router.get('/rua/:id/deleteCasa/:idC', verificaToken, function(req,res,next) {
 })
 
 router.get('/rua/:id/deleteCasa/:idC/S', verificaToken, function(req,res,next) {
-  axios.delete("http://localhost:8000/ruas/deleteCasa/" + req.params.idC + "/" + req.params.id)
+  axios.delete("http://localhost:8000/ruas/deleteCasa/" + req.params.idC)
     .then(response => {
         res.render("/rua/" + req.params.id);
     })
