@@ -134,7 +134,7 @@ def parseDesc(casa):
 
 def parseCasa(c):
     numero = c.find("./número").text
-    enfiteutas = [enf.text for enf in c.findall("./enfiteuta")]
+    enfiteutas = ", ".join([enf.text or "-" for enf in c.findall("./enfiteuta")])
     foro = ((nodo := c.find("./foro")) and nodo.text) or None
     desc = parseDesc(c)
     vista = ((nodo := c.find("./vista")) and nodo.text) or None
