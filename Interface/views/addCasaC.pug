@@ -2,6 +2,13 @@ extends layout
 
 block content
 	div(style="top:10px;")
-		h1 O registo da casa foi adicionado com sucesso.
-		a(href="http://localhost:8001/rua") 
-			button.w3-button.w3-white.w3-border Página Inicial
+		if (i == undefined) 
+			h1 O registo da casa foi adicionado com sucesso.
+		else 
+			h1 O registo da casa foi editado com sucesso.
+		if (i == undefined)
+			a(href="http://localhost:8001/rua/" + j)
+				button.w3-button.w3-white.w3-border Página Inicial
+		else
+			a(href="http://localhost:8001/rua/" + i)
+				button.w3-button.w3-white.w3-border Página Inicial 
