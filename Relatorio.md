@@ -115,15 +115,15 @@ Todos os utilizadores são capazes de adicionar novos registos para a lista de c
 
 ### Utilização da Google API
 
-Achamos que seria uma boa ideia implementar a API da Google de forma a facilitar a visualização das ruas no Google Maps.
+De forma a adicionar mais uma funcionalidade extra, e também desenvolver o nosso conhecimento em relação a API's e como as utilizar nos nossos trabalhos, decidimos tornar possível que o utilizador adicione um valor para a latitude e longitude de uma rua, o que tona possível ver a localização da mesma no Google Maps.
 
 ### Upload de Imagens
 
-Para além da implementação da API da Google, todos os utilizadores podem adicionar imagens à rua.
+De forma a utilizar o máximo possível o dataset fornecido, decidimos permitir a adição de imagens às ruas, e ainda a vizualização das mesmas na página respetiva.
 
 ### Search Bar
 
-
+Como tinha sido pedido no enunciado do trabalho que devíamos permitir uma procura por Datas presentes numa rua, Lugares presentes numa rua e Nome da Rua, decidimos adicionar uma barra de procura, que permite exatamente isso. Primeiro escolhemos qual o tipo de procura a fazer e em seguida escrevemos o texto que queremos filtrar e clicamos na tecla enter.
 
 ## Autenticação
 

@@ -1,0 +1,15 @@
+extends layout
+
+block content
+
+		header.w3-container
+			h2 Adicionar Figura
+        
+		form(method="POST")
+			label Select a Image 
+			input.w3-input.w3-round(type="file" name="myFile")
+			br
+			label Legenda 
+			input.w3-input.w3-round(type="text" name="legenda")
+
+			button.w3-btn.w3-mb-2(type="submit") Adicionar
