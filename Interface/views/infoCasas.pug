@@ -12,10 +12,6 @@ html
 		div.navbar
 			a(href='/') Home
 			a(href="/rua") Ruas
-			div.navbar-mid 
-				p(style="color:white;")
-				form(role="search")
-					input.form-control(type="search", placeholder="Search", aria-label="Search")
 			if (t == null)
 				div.navbar-right
 					a(href="/login") Login
@@ -125,10 +121,6 @@ html
 			p.wow Posts
 				
 				form(method="POST")
-					label Nome
-					input.w3-input.w3-round(type="text" name="autor")
-					label Data
-					input.w3-input.w3-round(type="text" name="data")
 					label Comentário
 					input.w3-input.w3-round(type="text" name="texto")
 
@@ -139,9 +131,21 @@ html
 				br
 				hr
 				for i in data.comentarios
-					hr 
-					.card.h-md-100.ecommerce-card-min-width
-						p #{i.autor} 
-						p #{i.data}
-						p #{i.texto}
+					hr
+					.card.card-white.post
+						.post-heading
+
+							.float-left.meta
+								.title.h5
+									b #{i.autor}
+									|  fez um post.
+								h6.text-muted.time #{i.data}
+						.post-description
+							p #{i.texto}
+						div.btn-group
+							button.btn.btn-sm.btn-outline-secondary(type="button")
+								a(href="/rua/" + data._id + "/deleteCasa/" + i._id) Eliminar
+
+						
+
 					
