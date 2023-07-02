@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Rua = require('../controllers/rua')
 
+const fs = require('fs');
+
 /* GET home page. */
 router.get('/ruas', function(req, res, next) {
     Rua.listaRuas(req.query)
@@ -74,6 +76,9 @@ router.get('/ruas/casa/:id', function(req, res, next) {
 });
 
 router.post('/ruas', function(req, res, next) {
+
+    console.log(req.body)
+
     Rua.addRua(req.body)
     .then(resposta => {
         res.status(201).jsonp(resposta);

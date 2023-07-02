@@ -3,9 +3,12 @@ var router = express.Router();
 var axios = require("axios");
 var jwt = require('jsonwebtoken')
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 const fs = require('fs');
 const { verificaAcesso } = require('../../Auth/auth/auth');
+const { response } = require('../app');
 
 function verificaToken(req, res, next){
   console.log("oiii")
@@ -75,14 +78,42 @@ router.get('/rua/register', function(req,res,next) {
   token = null;
 })
 
-router.post('/rua/register', function(req, res, next) {
+router.post('/rua/register', upload.single('myFile'), function(req, res, next) {
+
+  console.log(req.body)
+
   let para = {refs: {}, texto: req.body.texto }
   delete req.body.texto
-  req.body.paragrafos = [para]
+  req.body.paragrafos = para
   let pos = {latitude: req.body.latitude, longitude: req.body.longitude}
   delete req.body.latitude
   delete req.body.longitude
   req.body.pos = pos
+  
+  console.log('cdir: ' + __dirname)
+  let oldPath = __dirname + '/../' + req.file.path
+  console.log('old: ' + oldPath)
+  let newPath = __dirname + '/../atual/' + req.file.originalname
+  console.log('new: ' + newPath)
+
+  fs.rename(oldPath, newPath, erro => {
+      if(erro) console.log(erro)
+  })
+
+  let imagem = {
+    _id  : oldPath,
+    legenda : req.body.legenda,
+    imagem : {
+      path: newPath,
+      largura : null
+    }
+  }
+  
+  req.body.figuras = [imagem]
+
+  delete req.body.legenda
+  console.log(req.body)
+
   axios.post("http://localhost:8000/ruas", req.body)
     .then(response => {
         res.redirect('/rua');
